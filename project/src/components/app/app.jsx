@@ -1,63 +1,16 @@
 import React from 'react';
 import Main from './main/main';
-import {nanoid} from 'nanoid';
+import PropTypes from 'prop-types';
+import { hotelPropTypes } from './prop-types';
 
-function App() {
+function App(props) {
+  const { hotels } = props;
 
-  const places = [
-    {
-      id: nanoid(),
-      mark: 'Premium',
-      img: 'img/apartment-01.jpg',
-      price: 120,
-      priceText: 'night',
-      rating: 80,
-      name: 'Beautiful &amp; luxurious apartment at great location',
-      type: 'Apartment',
-    },
-    {
-      id: nanoid(),
-      mark: '',
-      img: 'img/room.jpg',
-      price: 80 ,
-      priceText: 'night',
-      rating: 80 ,
-      name: 'Wood and stone place',
-      type: 'Private room',
-    },
-    {
-      id: nanoid(),
-      mark: '',
-      img: 'img/apartment-02.jpg',
-      price: 132 ,
-      priceText: 'night',
-      rating: 80,
-      name: 'Canal View Prinsengracht',
-      type: 'Apartment',
-    },
-    {
-      id: nanoid(),
-      mark: 'Premium',
-      img: 'img/apartment-03.jpg',
-      price: 180 ,
-      priceText: 'night',
-      rating: 100,
-      name: 'Nice, cozy, warm big bed apartment',
-      type: 'Apartment',
-    },
-    {
-      id: nanoid(),
-      mark: 'Premium',
-      img: 'img/room.jpg',
-      price: 80 ,
-      priceText: 'night',
-      rating: 80,
-      name: 'Wood and stone place',
-      type: 'Private room',
-    },
-  ];
-
-  return <Main places={places}/>;
+  return <Main hotels={hotels}/>;
 }
 
+App.propTypes = {
+  hotels: PropTypes.arrayOf(
+    hotelPropTypes).isRequired,
+};
 export default App;

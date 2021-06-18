@@ -1,28 +1,27 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { hotelPropTypes } from '../prop-types';
 
-function PlaceCard(props) {
-  const { mark, img, price, priceText, rating, name, type} = props.place;
+function HotelCard(props) {
+  const { isPremium, previewImage, price,  rating, title, type} = props.place;
 
   return (
     <article className="cities__place-card place-card">
       {
-        mark &&
+        isPremium &&
         <div className="place-card__mark">
-          <span>{mark}</span>
+          <span>Premium</span>
         </div>
       }
-
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="/">
-          <img className="place-card__image" src={img} width="260" height="200" alt="Place "/>
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place "/>
         </a>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>
-            <span className="place-card__price-text">&#47;&nbsp;{priceText}</span>
+            <span className="place-card__price-text">&#47;&nbsp; night</span>
           </div>
           <button className="place-card__bookmark-button button" type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
@@ -38,7 +37,7 @@ function PlaceCard(props) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">{name}</a>
+          <a href="/">{title}</a>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -46,18 +45,9 @@ function PlaceCard(props) {
   );
 }
 
-PlaceCard.propTypes = {
-  place: PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    mark: PropTypes.string,
-    img: PropTypes.string.isRequired,
-    price: PropTypes.number.isRequired,
-    priceText: PropTypes.string.isRequired,
-    rating: PropTypes.number.isRequired,
-    name: PropTypes.string.isRequired,
-    type: PropTypes.string.isRequired,
-  }).isRequired,
+HotelCard.propTypes = {
+  place: hotelPropTypes,
 };
-export default PlaceCard;
+export default HotelCard;
 
 

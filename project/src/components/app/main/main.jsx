@@ -1,8 +1,9 @@
 import React from 'react';
-import PlaceCard from '../place-card/place-card';
+import HotelCard from '../hotel-card/hotel-card';
 import PropTypes from 'prop-types';
+import { hotelPropTypes } from '../prop-types';
 
-function Main({places}) {
+function Main({hotels}) {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -93,8 +94,8 @@ function Main({places}) {
               </form>
               <div className="cities__places-list places__list tabs__content">
                 {
-                  places.map((place) =>
-                    <PlaceCard key={place.id} place={place}/>)
+                  hotels.map((hotel) =>
+                    <HotelCard key={hotel.id} place={hotel}/>)
                 }
               </div>
             </section>
@@ -108,17 +109,7 @@ function Main({places}) {
   );
 }
 Main.propTypes = {
-  places: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      mark: PropTypes.string,
-      img: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      priceText: PropTypes.string.isRequired,
-      rating: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      type: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  hotels: PropTypes.arrayOf(
+    hotelPropTypes).isRequired,
 };
 export default Main;
