@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import { getHotels } from './mock/hotel';
-
-const hotels = getHotels() ;
+import { hotels } from './mock/hotel';
 
 ReactDOM.render(
   <React.StrictMode>
