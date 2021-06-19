@@ -1,8 +1,8 @@
 import React from 'react';
-import { hotelPropTypes } from '../prop-types';
+import { hotelPropTypes } from '../../prop-types';
 
 function HotelCard(props) {
-  const { isPremium, previewImage, price,  rating, title, type} = props.place;
+  const { isPremium, previewImage, price,  rating, title, type} = props.hotel;
 
   return (
     <article className="cities__place-card place-card">
@@ -46,7 +46,7 @@ function HotelCard(props) {
 }
 
 HotelCard.propTypes = {
-  place: hotelPropTypes,
+  hotel: hotelPropTypes,
 };
 export default HotelCard;
 

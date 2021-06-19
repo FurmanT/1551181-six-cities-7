@@ -1,7 +1,7 @@
 import React from 'react';
 import HotelCard from '../hotel-card/hotel-card';
 import PropTypes from 'prop-types';
-import { hotelPropTypes } from '../prop-types';
+import { hotelPropTypes } from '../../prop-types';
 
 function Main({hotels}) {
   return (
@@ -95,7 +95,7 @@ function Main({hotels}) {
               <div className="cities__places-list places__list tabs__content">
                 {
                   hotels.map((hotel) =>
-                    <HotelCard key={hotel.id} place={hotel}/>)
+                    <HotelCard key={hotel.id} hotel={hotel}/>)
                 }
               </div>
             </section>
