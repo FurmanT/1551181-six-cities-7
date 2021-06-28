@@ -1,8 +1,10 @@
 import React from 'react';
-import { hotelPropTypes } from '../../prop-types';
+import { offerPropTypes } from '../../prop-types';
+import {AppRoute} from '../../const';
+import {Link} from 'react-router-dom';
 
-function HotelCard(props) {
-  const { isPremium, previewImage, price,  rating, title, type} = props.hotel;
+function OfferCard(props) {
+  const { isPremium, previewImage, price,  rating, title, type} = props.offer;
 
   return (
     <article className="cities__place-card place-card">
@@ -37,7 +39,7 @@ function HotelCard(props) {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="/">{title}</a>
+          <Link to={AppRoute.ROOM} >{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
@@ -45,9 +47,9 @@ function HotelCard(props) {
   );
 }
 
-HotelCard.propTypes = {
-  hotel: hotelPropTypes,
+OfferCard.propTypes = {
+  offer: offerPropTypes,
 };
-export default HotelCard;
+export default OfferCard;
 
 

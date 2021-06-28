@@ -1,9 +1,10 @@
 import React from 'react';
-import HotelCard from '../hotel-card/hotel-card';
-import PropTypes from 'prop-types';
-import { hotelPropTypes } from '../../prop-types';
 
-function Main({hotels}) {
+import PropTypes from 'prop-types';
+import { offerPropTypes } from '../../prop-types';
+import OffersList from '../offers-list/offer-list';
+
+function Main({offers}) {
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -72,44 +73,13 @@ function Main({hotels}) {
             </ul>
           </section>
         </div>
-        <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">312 places to stay in Amsterdam</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex="0">
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom places__options--opened">
-                  <li className="places__option places__option--active" tabIndex="0">Popular</li>
-                  <li className="places__option" tabIndex="0">Price: low to high</li>
-                  <li className="places__option" tabIndex="0">Price: high to low</li>
-                  <li className="places__option" tabIndex="0">Top rated first</li>
-                </ul>
-              </form>
-              <div className="cities__places-list places__list tabs__content">
-                {
-                  hotels.map((hotel) =>
-                    <HotelCard key={hotel.id} hotel={hotel}/>)
-                }
-              </div>
-            </section>
-            <div className="cities__right-section">
-              <section className="cities__map map"></section>
-            </div>
-          </div>
-        </div>
+        <OffersList offers = {offers} />
       </main>
     </div>
   );
 }
 Main.propTypes = {
-  hotels: PropTypes.arrayOf(
-    hotelPropTypes).isRequired,
+  offers: PropTypes.arrayOf(
+    offerPropTypes).isRequired,
 };
 export default Main;
