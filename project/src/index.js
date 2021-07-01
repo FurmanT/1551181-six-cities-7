@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import { hotels } from './mock/hotel';
+import { offers } from './mocks/offers';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App hotels = {hotels}/>
+    <App offers = {offers}/>
   </React.StrictMode>,
   document.getElementById('root'));
