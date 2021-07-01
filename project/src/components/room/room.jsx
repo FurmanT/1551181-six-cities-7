@@ -1,35 +1,11 @@
 import React from 'react';
 import AddReview from '../add-review/add-review';
-import {reviews} from '../../mock/reviews';
+import {reviews} from '../../mocks/reviews';
 import dayjs from 'dayjs';
+import { offers } from '../../mocks/offers';
 
 function Room(props) {
-  const { isPremium, price, rating, title, images, goods, host, description} = {
-    id: 5,
-    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Hamburg.',
-    isPremium: true,
-    previewImage: 'img/room.jpg',
-    price: 80,
-    rating: 80,
-    title: 'Wood and stone place',
-    type: 'Private room',
-    city: {
-      location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
-        zoom: 10,
-      },
-      name: 'Hamburg',
-    },
-    images: ['img/apartment-03.jpg', 'img/apartment-01.jpg'],
-    goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Dishwasher'],
-    host: {
-      avatarUrl: 'img/avatar-angelina.jpg',
-      id: 3,
-      isPro: true,
-      name: 'Angelina',
-    },
-  };
+  const { isPremium, price, rating, title, images, goods, host, description} = offers[0];
 
   return (
     <main className="page__main page__main--property">

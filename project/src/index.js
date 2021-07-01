@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import { offers } from './mock/offers';
+import { offers } from './mocks/offers';
 
 ReactDOM.render(
   <React.StrictMode>

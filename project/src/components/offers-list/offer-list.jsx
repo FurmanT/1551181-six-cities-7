@@ -3,10 +3,12 @@ import OfferCard from '../offer-card/offer-card';
 import PropTypes from 'prop-types';
 import { offerPropTypes } from '../../prop-types';
 
-
 function OfferList({offers}) {
   // eslint-disable-next-line
-  const [activeOffer, setActiveOffer] = React.useState(1);
+  const [activeOffer, setActiveOffer] = React.useState(0);
+  const onMouseEnter = (evt) => {
+    setActiveOffer(evt.currentTarget.id);
+  };
 
   return (
     <div className="cities">
@@ -32,7 +34,7 @@ function OfferList({offers}) {
           <div className="cities__places-list places__list tabs__content">
             {
               offers.map((offer) =>
-                <OfferCard key={offer.id} offer={offer}/>)
+                <OfferCard key={offer.id} offer={offer} onMouseEnter={onMouseEnter}/>)
             }
           </div>
         </section>
