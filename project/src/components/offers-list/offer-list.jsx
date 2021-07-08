@@ -2,7 +2,7 @@ import React from 'react';
 import OfferCard from '../offer-card/offer-card';
 import PropTypes from 'prop-types';
 import { offerPropTypes } from '../../prop-types';
-
+import Map from '../map/map';
 function OfferList({offers}) {
   // eslint-disable-next-line
   const [activeOffer, setActiveOffer] = React.useState(0);
@@ -39,7 +39,7 @@ function OfferList({offers}) {
           </div>
         </section>
         <div className="cities__right-section">
-          <section className="cities__map map"></section>
+          <Map offers={offers}/>
         </div>
       </div>
     </div>
