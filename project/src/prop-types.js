@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 export const offerPropTypes = PropTypes.shape({
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   isPremium: PropTypes.bool,
   previewImage: PropTypes.string.isRequired,
   price: PropTypes.number.isRequired,
