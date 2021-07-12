@@ -3,7 +3,7 @@ import { offerPropTypes } from '../../prop-types';
 import {AppRoute} from '../../const';
 import {Link} from 'react-router-dom';
 
-function OfferCardInfo(props) {
+function CardInfo(props) {
   const {id, price, rating, title, type} = props.offer;
   return (
     <>
@@ -33,9 +33,9 @@ function OfferCardInfo(props) {
   );
 }
 
-OfferCardInfo.propTypes = {
+CardInfo.propTypes = {
   offer: offerPropTypes,
 };
-export default OfferCardInfo;
+export default CardInfo;
 
 

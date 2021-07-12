@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {offerPropTypes} from '../../prop-types';
-import OfferCardInfo from '../offer-card-info/offer-card-info';
+import CardInfo from '../card-info/card-info';
 
 function Favorites(props) {
   const offers = props.offers;
@@ -41,7 +41,7 @@ function Favorites(props) {
                             </a>
                           </div>
                           <div className="favorites__card-info place-card__info">
-                            <OfferCardInfo offer={offers} />
+                            <CardInfo offer={offers} />
                           </div>
                         </article>
                       ))}

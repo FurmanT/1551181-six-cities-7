@@ -1,3 +1,4 @@
+export const COUNT_NEIGHBOURHOOD_IN_MAP = 3;
 
 export const AppRoute = {
   SIGN_IN: '/login',
@@ -28,3 +29,10 @@ export const RatingType = {
     title: 'terribly',
   },
 };
+
+export const optionsIconMap = {
+  iconUrl: 'img/pin.svg',
+  iconSize: [30, 30],
+  iconAnchor: [15, 30],
+};
+
