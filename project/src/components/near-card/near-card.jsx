@@ -3,18 +3,19 @@ import { offerPropTypes } from '../../prop-types';
 import CardInfo from '../card-info/card-info';
 import PropTypes from 'prop-types';
 
-function OfferCard({offer , onMouseEnter }) {
+function NearCard({offer , onMouseEnter }) {
   const {id, isPremium, previewImage } = offer;
 
   return (
-    <article className="cities__place-card place-card" id={id}  onMouseEnter={onMouseEnter}>
+    <article className="near-places__card place-card"  id={id}  onMouseEnter={onMouseEnter}>
       {
         isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       }
-      <div className="cities__image-wrapper place-card__image-wrapper">
+
+      <div className="near-places__image-wrapper place-card__image-wrapper">
         <a href="/">
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place " />
         </a>
@@ -26,10 +27,10 @@ function OfferCard({offer , onMouseEnter }) {
   );
 }
 
-OfferCard.propTypes = {
+NearCard.propTypes = {
   offer: offerPropTypes,
   onMouseEnter: PropTypes.func.isRequired,
 };
-export default OfferCard;
+export default NearCard;
 
 

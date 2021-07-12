@@ -20,7 +20,7 @@ export const offers = [
     images: ['img/apartment-01.jpg'],
     goods: ['Heating', 'Kitchen', 'Cable TV', 'Washing machine', 'Coffee machine', 'Dishwasher'],
     host: {
-      avatarUrl: 'img/1.png',
+      avatarUrl: 'img/avatar-angelina.jpg',
       id: 3,
       isPro: true,
       name: 'Angelina',
@@ -202,7 +202,7 @@ export const offers = [
     images: ['img/apartment-01.jpg'],
     goods: ['Heating', 'Dishwasher'],
     host: {
-      avatarUrl: 'img/1.png',
+      avatarUrl: 'img/avatar-angelina.jpg',
       id: 3,
       isPro: true,
       name: 'Angelina',
