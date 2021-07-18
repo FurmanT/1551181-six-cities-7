@@ -6,7 +6,7 @@ export const offers = [
     isPremium: true,
     previewImage: 'img/apartment-01.jpg',
     price: 120,
-    rating: 80,
+    rating: 4.3,
     title: 'Beautiful &amp; luxurious apartment at great location',
     type: 'apartment',
     city: {
@@ -32,7 +32,7 @@ export const offers = [
     isPremium: false,
     previewImage: 'img/room.jpg',
     price: 80,
-    rating: 80 ,
+    rating: 2 ,
     title: 'Wood and stone place',
     type: 'Private room',
     city: {
@@ -58,7 +58,7 @@ export const offers = [
     isPremium: false,
     previewImage: 'img/apartment-02.jpg',
     price: 132 ,
-    rating: 80,
+    rating: 1,
     title: 'Canal View Prinsengracht',
     type: 'Apartment',
     city: {
@@ -84,7 +84,7 @@ export const offers = [
     isPremium: true,
     previewImage: 'img/apartment-03.jpg',
     price: 180,
-    rating: 100,
+    rating: 5,
     title: 'Nice, cozy, warm big bed apartment',
     type: 'Apartment',
     city: {
@@ -110,7 +110,7 @@ export const offers = [
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Hamburg.',
     previewImage: 'img/room.jpg',
     price: 80,
-    rating: 80,
+    rating: 4,
     title: 'Wood and stone place',
     type: 'Private room',
     city: {
@@ -136,7 +136,7 @@ export const offers = [
     isPremium: true,
     previewImage: 'img/apartment-01.jpg',
     price: 120,
-    rating: 80,
+    rating: 4,
     title: 'Beautiful &amp; luxurious apartment at great location',
     type: 'apartment',
     city: {
@@ -162,7 +162,7 @@ export const offers = [
     isPremium: true,
     previewImage: 'img/apartment-02.jpg',
     price: 120,
-    rating: 80,
+    rating: 3,
     title: 'Beautiful &amp; luxurious apartment at great location',
     type: 'apartment',
     city: {
@@ -188,7 +188,7 @@ export const offers = [
     isPremium: true,
     previewImage: 'img/apartment-03.jpg',
     price: 120,
-    rating: 80,
+    rating: 5,
     title: 'Beautiful &amp; luxurious apartment at great location',
     type: 'apartment',
     city: {
