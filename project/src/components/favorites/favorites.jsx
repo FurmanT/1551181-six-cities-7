@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {offerPropTypes} from '../../prop-types';
 import CardInfo from '../card-info/card-info';
+import {connect} from 'react-redux';
 
 function Favorites(props) {
   const offers = props.offers;
-
   const cities = [];
-  // eslint-disable-next-line
+  //eslint-disable-next-line
   offers.map((value) => {
     if (cities.indexOf(value.city.name) === -1) {
       cities.push(value.city.name);
@@ -60,6 +60,9 @@ Favorites.propTypes = {
   offers: PropTypes.arrayOf(
     offerPropTypes).isRequired,
 };
-export default Favorites;
 
+const mapStateToProps = (state) => ({
+  offers: state.offers,
+});
 
+export default connect(mapStateToProps, null)(Favorites);

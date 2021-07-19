@@ -2,9 +2,13 @@ import React from 'react';
 import { offerPropTypes } from '../../prop-types';
 import {AppRoute} from '../../const';
 import {Link} from 'react-router-dom';
+import { generatePath } from 'react-router';
+import { MAX_RATING } from '../../const';
 
 function CardInfo(props) {
   const {id, price, rating, title, type} = props.offer;
+  const stars = (Math.round(rating) * 100) / MAX_RATING;
+
   return (
     <>
       <div className="place-card__price-wrapper">
@@ -21,12 +25,12 @@ function CardInfo(props) {
       </div>
       <div className="place-card__rating rating">
         <div className="place-card__stars rating__stars">
-          <span style={{width: rating}}></span>
+          <span style={{width: `${stars}%`}}></span>
           <span className="visually-hidden">Rating</span>
         </div>
       </div>
       <h2 className="place-card__name">
-        <Link to={AppRoute.ROOM + id } >{title}</Link>
+        <Link to={generatePath(AppRoute.ROOM,{ id })} >{title}</Link>
       </h2>
       <p className="place-card__type">{type}</p>
     </>
