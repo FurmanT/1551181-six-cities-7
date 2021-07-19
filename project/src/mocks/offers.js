@@ -37,8 +37,8 @@ export const offers = [
     type: 'Private room',
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
+        latitude: 48.8534100,
+        longitude: 2.3488000,
         zoom: 10,
       },
       name: 'Paris',
@@ -63,8 +63,8 @@ export const offers = [
     type: 'Apartment',
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
+        latitude: 48.8534100,
+        longitude: 2.3088000,
         zoom: 10,
       },
       name: 'Paris',
@@ -89,8 +89,8 @@ export const offers = [
     type: 'Apartment',
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
+        latitude: 51.2217200,
+        longitude: 6.7761600,
         zoom: 10,
       },
       name: 'Dusseldorf',
@@ -115,8 +115,8 @@ export const offers = [
     type: 'Private room',
     city: {
       location: {
-        latitude: 52.370216,
-        longitude: 4.895168,
+        latitude: 53.5753200,
+        longitude: 10.0153400,
         zoom: 10,
       },
       name: 'Hamburg',
@@ -141,8 +141,8 @@ export const offers = [
     type: 'apartment',
     city: {
       location: {
-        latitude: 52.369553943508,
-        longitude: 4.85309666406198,
+        latitude: 52.38333,
+        longitude: 4.9,
         zoom: 10,
       },
       name: 'Amsterdam',
@@ -198,6 +198,58 @@ export const offers = [
         zoom: 10,
       },
       name: 'Amsterdam',
+    },
+    images: ['img/apartment-01.jpg'],
+    goods: ['Heating', 'Dishwasher'],
+    host: {
+      avatarUrl: 'img/avatar-angelina.jpg',
+      id: 3,
+      isPro: true,
+      name: 'Angelina',
+    },
+  },
+  {
+    id: 9,
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Brussels.',
+    isPremium: true,
+    previewImage: 'img/apartment-03.jpg',
+    price: 120,
+    rating: 5,
+    title: 'Beautiful &amp; luxurious apartment at great location',
+    type: 'apartment',
+    city: {
+      location: {
+        latitude: 50.8504500,
+        longitude: 4.3487800,
+        zoom: 10,
+      },
+      name: 'Brussels',
+    },
+    images: ['img/apartment-01.jpg'],
+    goods: ['Heating', 'Dishwasher'],
+    host: {
+      avatarUrl: 'img/avatar-angelina.jpg',
+      id: 3,
+      isPro: true,
+      name: 'Angelina',
+    },
+  },
+  {
+    id: 10,
+    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Cologne.',
+    isPremium: true,
+    previewImage: 'img/apartment-03.jpg',
+    price: 120,
+    rating: 5,
+    title: 'Beautiful &amp; luxurious apartment at great location',
+    type: 'apartment',
+    city: {
+      location: {
+        latitude: 50.9333300,
+        longitude: 6.9500000,
+        zoom: 10,
+      },
+      name: 'Cologne',
     },
     images: ['img/apartment-01.jpg'],
     goods: ['Heating', 'Dishwasher'],

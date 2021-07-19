@@ -5,14 +5,13 @@ import City from '../city/city';
 import {connect} from 'react-redux';
 import {cities} from '../../const';
 import { ActionCreator } from '../../store/action';
-import { offers as mockOffers } from '../../mocks/offers';
 
 function Main(props) {
   const {city, offers, onChangeCity } = props;
 
   const onChangeCityHandler = (e) => {
     const name = cities.find((item) => (item.id === parseInt(e.currentTarget.dataset.id, 10))).name;
-    onChangeCity(name, mockOffers);
+    onChangeCity(name);
   };
 
   return (
@@ -80,9 +79,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  onChangeCity(city, offers) {
+  onChangeCity(city) {
     dispatch(ActionCreator.changeCity(city));
-    dispatch(ActionCreator.addOffers(offers));
+    dispatch(ActionCreator.addOffers());
   },
 });
 
