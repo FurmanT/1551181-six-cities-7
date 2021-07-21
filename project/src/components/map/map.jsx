@@ -11,21 +11,23 @@ function Map(props) {
   const offers = props.offers;
   const city = props.offers[0].city.location;
   const map = useMap(mapRef, city);
+  const group = leaflet.layerGroup();
 
   useEffect(() => {
     if (map) {
       offers.forEach((offer) => {
-        leaflet
-          .marker({
-            lat: offer.city.location.latitude,
-            lng: offer.city.location.longitude,
-          }, {
-            icon: iconLeaflet,
-          })
-          .addTo(map);
+        leaflet.marker([offer.city.location.latitude, offer.city.location.longitude],
+          { icon: iconLeaflet})
+          .addTo(group);
       });
+      group.addTo(map);
     }
-  }, [map, offers]);
+    return () => {
+      if (map) {
+        map.removeLayer(group);
+      }
+    };
+  }, [map, offers, group]);
 
   return (
     <section className={`${props.className} map`} style={{height: '100%'}} ref={mapRef} />
