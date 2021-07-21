@@ -4,7 +4,7 @@ const withActiveOffer = (Component) => {
   function WithActiveOffer(props) {
     const [activeOfferId, setActiveOfferId] = React.useState(0);
     const handleActiveChange = (evt) => {
-      setActiveOfferId( Number.parseInt(evt.currentTarget.id, 10));
+      setActiveOfferId(Number.parseInt(evt.currentTarget.id, 10));
     };
 
     return (

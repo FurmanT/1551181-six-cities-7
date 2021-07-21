@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { offerPropTypes } from '../../prop-types';
 import City from '../city/city';
 import {connect} from 'react-redux';
 import {cities} from '../../const';
 import { ActionCreator } from '../../store/action';
 
 function Main(props) {
-  const {city, offers, onChangeCity } = props;
-
+  const {city, onChangeCity } = props;
+  const [sort, SetSort] = React.useState('popular');
   const onChangeCityHandler = (e) => {
     const name = cities.find((item) => (item.id === parseInt(e.currentTarget.dataset.id, 10))).name;
     onChangeCity(name);
@@ -61,21 +60,22 @@ function Main(props) {
             </ul>
           </section>
         </div>
-        <City offers={offers} name={city} />
+        <City
+          name={city}
+          sortBy={sort}
+          setSort={SetSort}
+        />
       </main>
     </div>
   );
 }
 Main.propTypes = {
   city: PropTypes.string,
-  offers: PropTypes.arrayOf(
-    offerPropTypes).isRequired,
   onChangeCity: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   city: state.city,
-  offers: state.offers,
 });
 
 const mapDispatchToProps = (dispatch) => ({
