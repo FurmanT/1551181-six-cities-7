@@ -15,11 +15,8 @@ export const getSortOffers = (state, sort) => {
   if (sort === 'rating') {
     //eslint-disable-next-line
     return state.offers.slice(0).sort(function(offer1, offer2) {
-      return offer1.rating - offer2.rating;
+      return offer2.rating - offer1.rating;
     });
   }
-  if (sort === 'popular') {
-    //eslint-disable-next-line
-    return state.offers.slice(0);
-  }
+  return state.offers;
 };

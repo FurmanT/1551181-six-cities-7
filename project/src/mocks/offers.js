@@ -141,7 +141,7 @@ export const offers = [
     type: 'apartment',
     city: {
       location: {
-        latitude: 52.38333,
+        latitude: 52.38777,
         longitude: 4.9,
         zoom: 10,
       },

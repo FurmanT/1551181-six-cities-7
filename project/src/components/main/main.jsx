@@ -4,13 +4,16 @@ import City from '../city/city';
 import {connect} from 'react-redux';
 import {cities} from '../../const';
 import { ActionCreator } from '../../store/action';
+import { options }  from '../sort/const';
 
 function Main(props) {
   const {city, onChangeCity } = props;
-  const [sort, SetSort] = React.useState('popular');
+  const [sort, SetSort] = React.useState(options[0]);
+
   const onChangeCityHandler = (e) => {
     const name = cities.find((item) => (item.id === parseInt(e.currentTarget.dataset.id, 10))).name;
     onChangeCity(name);
+    SetSort(options[0]);
   };
 
   return (
