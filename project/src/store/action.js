@@ -1,6 +1,7 @@
 export const ActionType = {
   CHANGE_CITY: 'city/change',
   ADD_OFFERS: 'offers/add',
+  SET_ACTIVE_OFFER: 'offers/active',
 };
 
 export const ActionCreator = {
@@ -10,5 +11,9 @@ export const ActionCreator = {
   }),
   addOffers: () => ({
     type: ActionType.ADD_OFFERS,
+  }),
+  setActiveOffer: (id) => ({
+    type: ActionType.SET_ACTIVE_OFFER,
+    payload: id,
   }),
 };

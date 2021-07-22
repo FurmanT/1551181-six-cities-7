@@ -1,22 +1,39 @@
 import React from 'react';
+import {ActionCreator} from '../../store/action';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
 const withActiveOffer = (Component) => {
   function WithActiveOffer(props) {
-    const [activeOfferId, setActiveOfferId] = React.useState(0);
+
+    const { onSetActiveOffer } = props;
+
     const handleActiveChange = (evt) => {
-      setActiveOfferId( Number.parseInt(evt.currentTarget.id, 10));
+      onSetActiveOffer(Number.parseInt(evt.currentTarget.id, 10));
     };
 
     return (
       <Component
         {...props}
-        isActive={activeOfferId}
+        isActive={4}
         onActiveChange={handleActiveChange}
       />
     );
   }
 
-  return WithActiveOffer;
+
+  const mapDispatchToProps = (dispatch) => ({
+    onSetActiveOffer(id) {
+      dispatch(ActionCreator.setActiveOffer(id));
+    },
+  });
+
+  WithActiveOffer.propTypes = {
+    onSetActiveOffer: PropTypes.func.isRequired,
+  };
+
+  return connect(null, mapDispatchToProps)(WithActiveOffer);
 };
 
 export default withActiveOffer;
+

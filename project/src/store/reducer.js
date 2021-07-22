@@ -7,6 +7,7 @@ const initialOffers = mockOffers.filter((offer) => offer.city.name === initialCi
 const initialState = {
   city: initialCity,
   offers: initialOffers,
+  activeOffer: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -22,6 +23,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         offers,
+      };
+    }
+    case ActionType.SET_ACTIVE_OFFER: {
+      return {
+        ...state,
+        activeOffer: state.offers.find((offer) => offer.id === action.payload) ,
       };
     }
     default:
