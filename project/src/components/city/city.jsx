@@ -1,5 +1,4 @@
 import OffersList from '../offers-list/offer-list';
-import Map from '../map/map';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Sort } from '../sort/sort';
@@ -7,6 +6,7 @@ import {offerPropTypes} from '../../prop-types';
 import {getSortOffers} from '../../store/offers/selector';
 import {connect} from 'react-redux';
 import {options}  from '../sort/const';
+import Map from '../map/map';
 
 function City({name, offers, sortBy, setSort}) {
   const title = `${offers.length} places to stay in ${name}`;
@@ -40,7 +40,7 @@ City.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-  offers: getSortOffers(state, props.sortBy.name),
+  offers: getSortOffers(state),
 });
 
 export default connect(mapStateToProps, null)(City);

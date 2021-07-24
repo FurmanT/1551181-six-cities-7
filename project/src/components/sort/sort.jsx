@@ -3,12 +3,9 @@ import PropTypes from 'prop-types';
 
 export function Sort({value, options, onChange}) {
   const [open, setOpen] = React.useState(false);
-  // const [name, setName] = React.useState('Popular');
 
   const onChangeSort = (e) => {
     onChange({name: e.target.id, label: e.target.textContent});
-    //eslint-disable-next-line
-    // setName(e.target.textContent);
     setOpen(!open);
   };
 

@@ -6,19 +6,20 @@ import {offerPropTypes} from '../../prop-types';
 import PropTypes from 'prop-types';
 import {iconLeaflet, activeIconLeaflet} from './const';
 import {connect} from 'react-redux';
+import {getActiveOffer} from '../../store/offers/selector';
 
 function Map(props) {
   const mapRef = React.useRef(null);
-  const offers = props.offers;
-  const city = props.offers[0].city.location;
-  const map = useMap(mapRef, city);
+  const {offers,  activeOfferId, activeOffer} = props ;
+  const center = offers[0].city.location;
+  const map = useMap(mapRef, center);
   const group = leaflet.layerGroup();
-  const activeOffer = props.activeOffer;
+
 
   useEffect(() => {
     if (map) {
       offers.forEach((offer) => {
-        leaflet.marker([offer.city.location.latitude, offer.city.location.longitude],
+        leaflet.marker([offer.location.latitude, offer.location.longitude],
           { icon: iconLeaflet})
           .addTo(group);
       });
@@ -32,12 +33,16 @@ function Map(props) {
   }, [map, offers, group]);
 
   useEffect(() => {
-    if (activeOffer) {
+    if (activeOfferId) {
       group.eachLayer((layer) => {
         const data = layer.getLatLng();
-        if (data.lat === activeOffer.city.location.latitude && data.lng === activeOffer.city.location.longitude) {
+        if (data.lat === activeOffer.location.latitude && data.lng === activeOffer.location.longitude) {
           layer.setIcon(activeIconLeaflet);
         }
+      });
+    } else {
+      group.eachLayer((layer) => {
+        layer.setIcon(iconLeaflet);
       });
     }
   });
@@ -49,13 +54,16 @@ function Map(props) {
 Map.propTypes = {
   offers: PropTypes.arrayOf(
     offerPropTypes).isRequired,
-  className: PropTypes.string,
+  className: PropTypes.string.isRequired,
+  activeOfferId: PropTypes.number,
   activeOffer: offerPropTypes,
 };
 
-const mapStateToProps = (state) => ({
-  activeOffer: state.activeOffer,
+const mapStateToProps = (state, props) => ({
+  activeOfferId: state.activeOfferId,
+  activeOffer: getActiveOffer(state),
 });
+
 
 export default connect(mapStateToProps, null)(Map);
 
