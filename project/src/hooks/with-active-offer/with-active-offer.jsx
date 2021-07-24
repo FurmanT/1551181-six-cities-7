@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 
 const withActiveOffer = (Component) => {
   function WithActiveOffer(props) {
-
     const { onSetActiveOffer } = props;
 
     const handleActiveChange = (evt) => {
@@ -15,8 +14,8 @@ const withActiveOffer = (Component) => {
     return (
       <Component
         {...props}
-        isActive={4}
         onActiveChange={handleActiveChange}
+        onDisableActive={() => onSetActiveOffer(null)}
       />
     );
   }

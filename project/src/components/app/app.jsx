@@ -6,8 +6,18 @@ import Room from '../room/room';
 import Favorites from '../favorites/favorites';
 import SignIn from '../sign-in/sign-in';
 import NotFoundPage from '../not-found-page/not-found-page';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
+import LoadingScreen from '../loading-screen/loading-screen';
 
-function App() {
+function App(props) {
+
+  if(!props.isDataLoaded) {
+    return (
+      <LoadingScreen />
+    );
+  }
+
   return (
     <BrowserRouter>
       <Switch>
@@ -30,4 +40,13 @@ function App() {
     </BrowserRouter>);
 }
 
-export default App;
+App.propTypes = {
+  isDataLoaded: PropTypes.bool.isRequired,
+};
+
+
+const mapStateToProps = (state) => ({
+  isDataLoaded: state.isDataLoaded,
+});
+
+export default connect(mapStateToProps, null)(App);

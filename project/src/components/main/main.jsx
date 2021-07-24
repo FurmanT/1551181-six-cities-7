@@ -4,16 +4,13 @@ import City from '../city/city';
 import {connect} from 'react-redux';
 import {cities} from '../../const';
 import { ActionCreator } from '../../store/action';
-import { options }  from '../sort/const';
 
 function Main(props) {
-  const {city, onChangeCity } = props;
-  const [sort, SetSort] = React.useState(options[0]);
+  const {city, onChangeCity, sort , onChangeSort} = props;
 
   const onChangeCityHandler = (e) => {
     const name = cities.find((item) => (item.id === parseInt(e.currentTarget.dataset.id, 10))).name;
     onChangeCity(name);
-    SetSort(options[0]);
   };
 
   return (
@@ -66,25 +63,33 @@ function Main(props) {
         <City
           name={city}
           sortBy={sort}
-          setSort={SetSort}
+          setSort={onChangeSort}
         />
       </main>
     </div>
   );
 }
 Main.propTypes = {
-  city: PropTypes.string,
+  city: PropTypes.string.isRequired,
+  sort: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired}).isRequired,
   onChangeCity: PropTypes.func.isRequired,
+  onChangeSort: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   city: state.city,
+  sort: state.sort,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onChangeCity(city) {
     dispatch(ActionCreator.changeCity(city));
     dispatch(ActionCreator.addOffers());
+  },
+  onChangeSort(sort) {
+    dispatch(ActionCreator.setSort(sort));
   },
 });
 

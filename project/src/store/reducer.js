@@ -1,13 +1,15 @@
 import {ActionType} from './action';
-import { offers as mockOffers } from '../mocks/offers';
 
 const initialCity = 'Paris';
-const initialOffers = mockOffers.filter((offer) => offer.city.name === initialCity);
+const initialSort = {name: 'popular', label: 'Popular'};
 
 const initialState = {
   city: initialCity,
-  offers: initialOffers,
-  activeOffer: null,
+  sort: initialSort,
+  offers: [],
+  activeOfferId: null,
+  allOffers: [],
+  isDataLoaded: false,
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,19 +18,34 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         city: action.payload,
+        sort: initialSort,
+        activeOfferId: null,
+      };
+    }
+    case ActionType.SET_SORT: {
+      return {
+        ...state,
+        sort: action.payload,
+      };
+    }
+    case ActionType.LOAD_OFFERS: {
+      return {
+        ...state,
+        allOffers: action.payload,
       };
     }
     case ActionType.ADD_OFFERS: {
-      const offers = mockOffers.filter((offer) => offer.city.name === state.city);
+      const offers = state.allOffers.filter((offer) => offer.city.name === state.city);
       return {
         ...state,
         offers,
+        isDataLoaded: true,
       };
     }
     case ActionType.SET_ACTIVE_OFFER: {
       return {
         ...state,
-        activeOffer: state.offers.find((offer) => offer.id === action.payload) ,
+        activeOfferId: action.payload,
       };
     }
     default:
