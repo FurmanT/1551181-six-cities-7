@@ -1,32 +1,7 @@
 export const COUNT_NEIGHBOURHOOD_IN_MAP = 3;
 export const MAX_RATING = 5;
 
-export const cities = [
-  {
-    id: 1,
-    name: 'Paris',
-  },
-  {
-    id: 2,
-    name: 'Cologne',
-  },
-  {
-    id: 3,
-    name: 'Brussels',
-  },
-  {
-    id: 4,
-    name: 'Amsterdam',
-  },
-  {
-    id: 5,
-    name: 'Hamburg',
-  },
-  {
-    id: 6,
-    name: 'Dusseldorf',
-  },
-];
+export const cities = [ 'Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 export const AppRoute = {
   SIGN_IN: '/login',
@@ -58,3 +33,14 @@ export const RatingType = {
   },
 };
 
+export const AuthorizationStatus = {
+  AUTH: 'AUTH',
+  NO_AUTH: 'NO_AUTH',
+  UNKNOWN: 'UNKNOWN',
+};
+
+export const APIRoute = {
+  HOTELS: '/hotels',
+  LOGIN: '/login',
+  LOGOUT: '/logout',
+};

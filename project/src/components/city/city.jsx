@@ -2,10 +2,10 @@ import OffersList from '../offers-list/offer-list';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Sort } from '../sort/sort';
-import {offerPropTypes} from '../../prop-types';
-import {getSortOffers} from '../../store/offers/selector';
-import {connect} from 'react-redux';
-import {options}  from '../sort/const';
+import { offerPropTypes } from '../../prop-types';
+import { getSortOffers } from '../../store/offers/selector';
+import { connect } from 'react-redux';
+import { options } from '../sort/const';
 import Map from '../map/map';
 
 function City({name, offers, sortBy, setSort}) {

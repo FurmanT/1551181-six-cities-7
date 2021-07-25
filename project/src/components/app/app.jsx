@@ -1,14 +1,15 @@
 import React from 'react';
 import Main from '../main/main';
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import Room from '../room/room';
 import Favorites from '../favorites/favorites';
 import SignIn from '../sign-in/sign-in';
 import NotFoundPage from '../not-found-page/not-found-page';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import LoadingScreen from '../loading-screen/loading-screen';
+import PrivateRoute from '../private-route/private-route';
 
 function App(props) {
 
@@ -27,9 +28,11 @@ function App(props) {
         <Route exact path={AppRoute.SIGN_IN}>
           <SignIn />
         </Route>
-        <Route exact path={AppRoute.FAVORITES}>
-          <Favorites/>
-        </Route>
+        <PrivateRoute
+          exact
+          path={AppRoute.FAVORITES}
+          render={() => <Favorites />}
+        />
         <Route exact path={AppRoute.ROOM}>
           <Room />
         </Route>
@@ -43,7 +46,6 @@ function App(props) {
 App.propTypes = {
   isDataLoaded: PropTypes.bool.isRequired,
 };
-
 
 const mapStateToProps = (state) => ({
   isDataLoaded: state.isDataLoaded,

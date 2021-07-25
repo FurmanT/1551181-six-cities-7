@@ -1,15 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import City from '../city/city';
-import {connect} from 'react-redux';
-import {cities} from '../../const';
+import { connect } from 'react-redux';
+import { AppRoute, cities } from '../../const';
 import { ActionCreator } from '../../store/action';
+import { logout } from '../../store/api-actions';
+import { AuthorizationStatus } from '../../const';
+import { useHistory } from 'react-router-dom';
 
 function Main(props) {
-  const {city, onChangeCity, sort , onChangeSort} = props;
+  const {city, onChangeCity, sort, onChangeSort, authorizationStatus, onLogOut} = props;
+  const history = useHistory();
 
   const onChangeCityHandler = (e) => {
-    const name = cities.find((item) => (item.id === parseInt(e.currentTarget.dataset.id, 10))).name;
+    const name = cities.find((item) => item === e.currentTarget.dataset.name, 10);
     onChangeCity(name);
   };
 
@@ -25,18 +29,30 @@ function Main(props) {
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="/">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="/">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
+                {
+                  authorizationStatus === AuthorizationStatus.NO_AUTH ? (
+                    <li className="header__nav-item">
+                      <a className="header__nav-link" href="/" onClick={() => history.push(AppRoute.SIGN_IN)}>
+                        <span className="header__signout">Sign in</span>
+                      </a>
+                    </li>
+                  ) : (
+                    <>
+                      <li className="header__nav-item user">
+                        <a className="header__nav-link header__nav-link--profile" href="/">
+                          <div className="header__avatar-wrapper user__avatar-wrapper">
+                          </div>
+                          <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                        </a>
+                      </li>
+                      <li className="header__nav-item">
+                        <a className="header__nav-link" href="/" onClick={() => onLogOut()}>
+                          <span className="header__signout">Sign out</span>
+                        </a>
+                      </li>
+                    </>
+                  )
+                }
               </ul>
             </nav>
           </div>
@@ -50,9 +66,9 @@ function Main(props) {
             <ul className="locations__list tabs__list">
               {
                 cities.map((item) => (
-                  <li className="locations__item" key={item.id}>
-                    <a href="/#" className= {` locations__item-link tabs__item ${item.name === city && 'tabs__item--active'}`} data-id={item.id} onClick={onChangeCityHandler} >
-                      <span>{item.name}</span>
+                  <li className="locations__item" key={item}>
+                    <a href="/#" className= {`locations__item-link tabs__item ${item === city && 'tabs__item--active'}`} data-name={item} onClick={onChangeCityHandler} >
+                      <span>{item}</span>
                     </a>
                   </li>
                 ))
@@ -76,20 +92,26 @@ Main.propTypes = {
     label: PropTypes.string.isRequired}).isRequired,
   onChangeCity: PropTypes.func.isRequired,
   onChangeSort: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string,
+  onLogOut: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   city: state.city,
   sort: state.sort,
+  authorizationStatus: state.authorizationStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onChangeCity(city) {
     dispatch(ActionCreator.changeCity(city));
-    dispatch(ActionCreator.addOffers());
+    // dispatch(ActionCreator.addOffers());
   },
   onChangeSort(sort) {
     dispatch(ActionCreator.setSort(sort));
+  },
+  onLogOut() {
+    dispatch(logout());
   },
 });
 
