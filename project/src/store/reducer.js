@@ -1,5 +1,5 @@
 import {ActionType} from './action';
-
+import { AuthorizationStatus } from '../const';
 const initialCity = 'Paris';
 const initialSort = {name: 'popular', label: 'Popular'};
 
@@ -8,8 +8,9 @@ const initialState = {
   sort: initialSort,
   offers: [],
   activeOfferId: null,
-  allOffers: [],
   isDataLoaded: false,
+  authorizationStatus: AuthorizationStatus.UNKNOWN,
+  user: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -31,14 +32,7 @@ const reducer = (state = initialState, action) => {
     case ActionType.LOAD_OFFERS: {
       return {
         ...state,
-        allOffers: action.payload,
-      };
-    }
-    case ActionType.ADD_OFFERS: {
-      const offers = state.allOffers.filter((offer) => offer.city.name === state.city);
-      return {
-        ...state,
-        offers,
+        offers: action.payload,
         isDataLoaded: true,
       };
     }
@@ -48,6 +42,22 @@ const reducer = (state = initialState, action) => {
         activeOfferId: action.payload,
       };
     }
+    case ActionType.REQUIRED_AUTHORIZATION:
+      return {
+        ...state,
+        authorizationStatus: action.payload,
+      };
+    case ActionType.LOGOUT:
+      return {
+        ...state,
+        authorizationStatus: AuthorizationStatus.NO_AUTH,
+        user: null,
+      };
+    case ActionType.SET_USER:
+      return {
+        ...state,
+        user: action.payload,
+      };
     default:
       return state;
   }

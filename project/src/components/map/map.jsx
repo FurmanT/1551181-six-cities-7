@@ -10,7 +10,7 @@ import {getActiveOffer} from '../../store/offers/selector';
 
 function Map(props) {
   const mapRef = React.useRef(null);
-  const {offers,  activeOfferId, activeOffer} = props ;
+  const {offers, activeOffer} = props ;
   const center = offers[0].city.location;
   const map = useMap(mapRef, center);
   const group = leaflet.layerGroup();
@@ -33,7 +33,7 @@ function Map(props) {
   }, [map, offers, group]);
 
   useEffect(() => {
-    if (activeOfferId) {
+    if (activeOffer) {
       group.eachLayer((layer) => {
         const data = layer.getLatLng();
         if (data.lat === activeOffer.location.latitude && data.lng === activeOffer.location.longitude) {
@@ -55,12 +55,10 @@ Map.propTypes = {
   offers: PropTypes.arrayOf(
     offerPropTypes).isRequired,
   className: PropTypes.string.isRequired,
-  activeOfferId: PropTypes.number,
   activeOffer: offerPropTypes,
 };
 
-const mapStateToProps = (state, props) => ({
-  activeOfferId: state.activeOfferId,
+const mapStateToProps = (state) => ({
   activeOffer: getActiveOffer(state),
 });
 

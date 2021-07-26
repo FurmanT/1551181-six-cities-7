@@ -1,49 +1,21 @@
 import React from 'react';
-import {reviews} from '../../mocks/reviews';
-import { offers } from '../../mocks/offers';
-import ReviewsList from '../reviews-list/reviews-list';
-import Map from '../map/map';
-import {COUNT_NEIGHBOURHOOD_IN_MAP} from '../../const';
-import NearOfferList from '../near-offer-list/near-offer-list';
+import {getOffersById} from '../../store/offers/selector';
+import {connect} from 'react-redux';
+import {offerPropTypes} from '../../prop-types';
+import Header from '../header/header';
 
 function Room(props) {
-  const {isPremium, price, rating, title, images, goods, host, description} = offers[0];
+  const {isPremium, price, rating, title, images, goods, host, description} = props.offer;
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <a className="header__logo-link" href="main.html">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-              </a>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <a className="header__nav-link header__nav-link--profile" href="/">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </a>
-                </li>
-                <li className="header__nav-item">
-                  <a className="header__nav-link" href="/">
-                    <span className="header__signout">Sign out</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="page__main page__main--property">
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image, index) => (
+              {images.map((image) => (
                 <div className="property__image-wrapper" key={image}>
                   <img className="property__image" src={image} alt="studio"/>
                 </div>
@@ -121,24 +93,29 @@ function Room(props) {
                   </p>
                 </div>
               </div>
-              {reviews && <ReviewsList reviews={reviews}/>}
+              {/*{reviews && <ReviewsList reviews={reviews}/>}*/}
             </div>
           </div>
-          <section className="property__map map">
-            <Map offers={offers.slice(0, COUNT_NEIGHBOURHOOD_IN_MAP)}/>
-          </section>
+          {/*<section className="property__map map">*/}
+          {/*  <Map offers={offers.slice(0, COUNT_NEIGHBOURHOOD_IN_MAP)}/>*/}
+          {/*</section>*/}
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearOfferList offers = {offers} />
+            {/*<NearOfferList offers = {offers} />*/}
           </section>
         </div>
       </main>
     </div>
   );
 }
+Room.propTypes = {
+  offer: offerPropTypes,
+};
+const mapStateToProps = (state, props) => ({
+  offer: getOffersById(state, 1),
+});
 
-export default Room;
-
+export default connect(mapStateToProps, null)(Room);
 
