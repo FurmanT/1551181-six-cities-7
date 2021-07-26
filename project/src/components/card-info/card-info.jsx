@@ -1,7 +1,7 @@
 import React from 'react';
 import { offerPropTypes } from '../../prop-types';
-import {AppRoute} from '../../const';
-import {Link} from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { Link } from 'react-router-dom';
 import { generatePath } from 'react-router';
 import { MAX_RATING } from '../../const';
 

@@ -5,6 +5,7 @@ export const ActionType = {
   SET_SORT: 'sort/set',
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
+  SET_USER: 'user/set',
 };
 
 export const ActionCreator = {
@@ -30,5 +31,9 @@ export const ActionCreator = {
   }),
   logout: () => ({
     type: ActionType.LOGOUT,
+  }),
+  setUser: (user) =>({
+    type: ActionType.SET_USER,
+    payload: user,
   }),
 };

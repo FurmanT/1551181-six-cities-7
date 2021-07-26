@@ -55,12 +55,10 @@ Map.propTypes = {
   offers: PropTypes.arrayOf(
     offerPropTypes).isRequired,
   className: PropTypes.string.isRequired,
-  //activeOfferId: PropTypes.number,
   activeOffer: offerPropTypes,
 };
 
-const mapStateToProps = (state, props) => ({
-  //activeOfferId: state.activeOfferId,
+const mapStateToProps = (state) => ({
   activeOffer: getActiveOffer(state),
 });
 

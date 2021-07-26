@@ -1,7 +1,7 @@
 export const getOffers = (state) => state.offers;
 
 export const getSortOffers = (state) => {
-  const offers = state.offers.slice(0).filter((offer) => offer.city.name === state.city);
+  const offers = state.offers.filter((offer) => offer.city.name === state.city);
 
   if (state.sort.name === 'priceToHigh') {
     return offers.sort((offer1, offer2) => offer1.price - offer2.price);
@@ -17,4 +17,4 @@ export const getSortOffers = (state) => {
 
 export const getActiveOffer = (state) => state.offers.find((offer) => offer.id === state.activeOfferId);
 
-
+export const getOffersById = (state, id) => state.offers.find((offer) => offer.id === id);

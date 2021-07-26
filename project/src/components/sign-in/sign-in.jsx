@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { AuthorizationStatus } from '../../const';
+import Header from '../header/header';
 
 function SignIn({onSubmit , authorizationStatus}) {
   const emailRef = useRef();
@@ -25,31 +26,34 @@ function SignIn({onSubmit , authorizationStatus}) {
   }
 
   return (
-    <main className="page__main page__main--login">
-      <div className="page__login-container container">
-        <section className="login">
-          <h1 className="login__title">Sign in</h1>
-          <form className="login__form form" action="" method="post">
-            <div className="login__input-wrapper form__input-wrapper">
-              <label className="visually-hidden">E-mail</label>
-              <input ref={emailRef} className="login__input form__input" type="email" name="email" id="email" placeholder="Email" required=""/>
+    <div className="page page--gray page--login">
+      <Header />
+      <main className="page__main page__main--login">
+        <div className="page__login-container container">
+          <section className="login">
+            <h1 className="login__title">Sign in</h1>
+            <form className="login__form form" action="" method="post">
+              <div className="login__input-wrapper form__input-wrapper">
+                <label className="visually-hidden">E-mail</label>
+                <input ref={emailRef} className="login__input form__input" type="email" name="email" id="email" placeholder="Email" required=""/>
+              </div>
+              <div className="login__input-wrapper form__input-wrapper">
+                <label className="visually-hidden">Password</label>
+                <input ref={passwordRef} className="login__input form__input" type="password" name="password"  id="password" placeholder="Password" required=""/>
+              </div>
+              <button className="login__submit form__submit button" type="submit" onClick={handleSubmit}>Sign in</button>
+            </form>
+          </section>
+          <section className="locations locations--login locations--current">
+            <div className="locations__item">
+              <a className="locations__item-link" href="/">
+                <span>Amsterdam</span>
+              </a>
             </div>
-            <div className="login__input-wrapper form__input-wrapper">
-              <label className="visually-hidden">Password</label>
-              <input ref={passwordRef} className="login__input form__input" type="password" name="password"  id="password" placeholder="Password" required=""/>
-            </div>
-            <button className="login__submit form__submit button" type="submit" onClick={handleSubmit}>Sign in</button>
-          </form>
-        </section>
-        <section className="locations locations--login locations--current">
-          <div className="locations__item">
-            <a className="locations__item-link" href="/">
-              <span>Amsterdam</span>
-            </a>
-          </div>
-        </section>
-      </div>
-    </main>
+          </section>
+        </div>
+      </main>
+    </div>
   );
 }
 
