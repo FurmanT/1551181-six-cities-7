@@ -1,12 +1,12 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import 'leaflet/dist/leaflet.css';
 import leaflet from 'leaflet';
 import useMap from '../../hooks/use-map/use-map';
-import {offerPropTypes} from '../../prop-types';
+import { offerPropTypes } from '../../prop-types';
 import PropTypes from 'prop-types';
-import {iconLeaflet, activeIconLeaflet} from './const';
-import {connect} from 'react-redux';
-import {getActiveOffer} from '../../store/offers/selector';
+import { iconLeaflet, activeIconLeaflet } from './const';
+import { connect } from 'react-redux';
+import { getActiveOffer } from '../../store/offers/selector';
 
 function Map(props) {
   const mapRef = React.useRef(null);
@@ -14,7 +14,6 @@ function Map(props) {
   const center = offers[0].city.location;
   const map = useMap(mapRef, center);
   const group = leaflet.layerGroup();
-
 
   useEffect(() => {
     if (map) {
@@ -61,7 +60,6 @@ Map.propTypes = {
 const mapStateToProps = (state) => ({
   activeOffer: getActiveOffer(state),
 });
-
 
 export default connect(mapStateToProps, null)(Map);
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {offerPropTypes} from '../../prop-types';
+import { offerPropTypes } from '../../prop-types';
 import CardInfo from '../card-info/card-info';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Header from '../header/header';
 
 function Favorites(props) {
