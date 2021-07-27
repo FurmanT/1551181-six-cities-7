@@ -1,5 +1,5 @@
 import { ActionCreator } from './action';
-import { adaptOffersToClient, adaptUserToClient } from '../utils';
+import { adaptOffersToClient, adaptUserToClient, adaptOfferToClient, adaptCommentToClient } from '../utils';
 import { APIRoute, AuthorizationStatus } from '../const';
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
@@ -30,3 +30,30 @@ export const logout = () => (dispatch, _getState, api) => (
     .then(() => localStorage.removeItem('token'))
     .then(() => dispatch(ActionCreator.logout()))
 );
+
+
+export const getOfferById = (id) => (dispatch, _getState, api) => {
+  dispatch(ActionCreator.setLoad(true));
+  api.get(`/hotels/${id}`)
+    .then(({data}) => dispatch(ActionCreator.setRoom(adaptOfferToClient(data))))
+    .then(()=>
+      api.get(`/hotels/${id}/nearby`)
+        .then(({data}) => dispatch(ActionCreator.setNearby(adaptOffersToClient(data)))))
+    .then(() =>
+      api.get(`/comments/${id}`)
+        .then(({data}) => dispatch(ActionCreator.setComments(adaptCommentToClient(data)))))
+    .then(()=> dispatch(ActionCreator.setLoad(false)))
+    .catch(() => dispatch(ActionCreator.setStatusRequest('error')));
+};
+
+
+export const sentReview = (id, review) => (dispatch, _getState, api) => {
+  api.post(`comments/${id}`, review)
+    .then(({data}) => {
+      dispatch(ActionCreator.setComments(adaptCommentToClient(data)));
+      dispatch(ActionCreator.setStatusRequest(true));
+    })
+    .catch(() => dispatch(ActionCreator.setStatusRequest(false)));
+};
+
+

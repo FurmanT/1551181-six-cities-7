@@ -6,6 +6,11 @@ export const ActionType = {
   REQUIRED_AUTHORIZATION: 'user/requiredAuthorization',
   LOGOUT: 'user/logout',
   SET_USER: 'user/set',
+  SET_ROOM: 'room/set',
+  SET_LOADING: 'load/set',
+  SET_COMMENTS: 'comments/set',
+  SET_NEARBY: 'nearby/set',
+  SET_STATUS_REQUEST: 'review/status',
 };
 
 export const ActionCreator = {
@@ -35,5 +40,25 @@ export const ActionCreator = {
   setUser: (user) =>({
     type: ActionType.SET_USER,
     payload: user,
+  }),
+  setRoom: (room) => ({
+    type: ActionType.SET_ROOM,
+    payload: room,
+  }),
+  setLoad: (status) => ({
+    type: ActionType.SET_LOADING,
+    payload: status,
+  }),
+  setComments: (comments) => ({
+    type: ActionType.SET_COMMENTS,
+    payload: comments,
+  }),
+  setNearby: (nearby) => ({
+    type: ActionType.SET_NEARBY,
+    payload: nearby,
+  }),
+  setStatusRequest: (status) => ({
+    type: ActionType.SET_STATUS_REQUEST,
+    payload: status,
   }),
 };

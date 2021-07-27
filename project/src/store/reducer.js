@@ -7,10 +7,15 @@ const initialState = {
   city: initialCity,
   sort: initialSort,
   offers: [],
+  comments: [],
+  nearby: [],
   activeOfferId: null,
   isDataLoaded: false,
   authorizationStatus: AuthorizationStatus.UNKNOWN,
   user: null,
+  room: null,
+  loading: false,
+  requestStatus: '',
 };
 
 const reducer = (state = initialState, action) => {
@@ -58,6 +63,36 @@ const reducer = (state = initialState, action) => {
         ...state,
         user: action.payload,
       };
+    case ActionType.SET_ROOM: {
+      return {
+        ...state,
+        room: action.payload,
+      };
+    }
+    case ActionType.SET_LOADING: {
+      return {
+        ...state,
+        loading: action.payload,
+      };
+    }
+    case ActionType.SET_COMMENTS: {
+      return {
+        ...state,
+        comments: action.payload,
+      };
+    }
+    case ActionType.SET_NEARBY: {
+      return {
+        ...state,
+        nearby: action.payload,
+      };
+    }
+    case ActionType.SET_STATUS_REQUEST: {
+      return {
+        ...state,
+        requestStatus: action.payload,
+      };
+    }
     default:
       return state;
   }

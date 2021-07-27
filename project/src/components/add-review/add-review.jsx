@@ -1,10 +1,13 @@
 import React from 'react';
 import { RatingType } from '../../const';
+import { sentReview } from '../../store/api-actions';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
-function AddReview() {
+function AddReview({id, handlerSentReview}) {
   const [review, setReview] = React.useState({
     rating: 0,
-    text: '',
+    comment: '',
   });
 
   const onChangeRating = (evt) => {
@@ -12,8 +15,17 @@ function AddReview() {
     setReview({...review, rating: value});
   };
 
+  const onHandlerSubmit = (e) => {
+    e.preventDefault();
+    handlerSentReview(id, review);
+    setReview({
+      rating: 0,
+      comment: '',
+    });
+  };
+
   return (
-    <form className="reviews__form form">
+    <form className="reviews__form form" onSubmit={onHandlerSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {
@@ -33,7 +45,7 @@ function AddReview() {
         id="review" name="review"
         onChange={({target}) => {
           const value = target.value;
-          setReview({...review, text: value});
+          setReview({...review, comment: value});
         }}
         placeholder="Tell how was your stay, what you like and what can be improved"
       />
@@ -48,4 +60,20 @@ function AddReview() {
   );
 }
 
-export default AddReview;
+AddReview.propTypes = {
+  id: PropTypes.number.isRequired,
+  handlerSentReview: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state, props) => ({
+  id: state.room.id,
+});
+
+
+const mapDispatchToProps = (dispatch) => ({
+  handlerSentReview(id, review) {
+    dispatch(sentReview(id , review));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddReview);
