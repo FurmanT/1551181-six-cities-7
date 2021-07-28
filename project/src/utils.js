@@ -6,8 +6,9 @@ export const adaptOffersToClient = (offers) => {
       {},
       offer,
       {
-        isPremium:  offer.is_premium ,
-        isFavorite:  offer.is_favorite ,
+        isPremium:  offer.is_premium,
+        maxAdults: offer.max_adults,
+        isFavorite:  offer.is_favorite,
         previewImage: offer.preview_image,
         host: Object.assign({}, offer.host, {
           avatarUrl: offer.host.avatar_url,
@@ -32,7 +33,8 @@ export const adaptOfferToClient = (offer) => {
     {},
     offer,
     {
-      isPremium:  offer.is_premium ,
+      maxAdults: offer.max_adults,
+      isPremium:  offer.is_premium,
       isFavorite:  offer.is_favorite ,
       previewImage: offer.preview_image,
       host: Object.assign({}, offer.host, {

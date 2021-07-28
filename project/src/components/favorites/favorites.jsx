@@ -4,6 +4,7 @@ import { offerPropTypes } from '../../prop-types';
 import CardInfo from '../card-info/card-info';
 import { connect } from 'react-redux';
 import Header from '../header/header';
+import { getOffers } from '../../store/offers-process/selector';
 
 function Favorites(props) {
   const offers = props.offers;
@@ -66,7 +67,7 @@ Favorites.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  offers: state.offers,
+  offers: getOffers(state),
 });
 
 export default connect(mapStateToProps, null)(Favorites);

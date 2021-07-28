@@ -2,16 +2,24 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { offerPropTypes, reviewPropTypes } from '../../prop-types';
 import Header from '../header/header';
-import { getOfferById } from '../../store/api-actions';
+import { getOfferById, setFavoriteRoom } from '../../store/api-actions';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import ReviewsList from '../reviews-list/reviews-list';
 import NearOfferList from '../near-offer-list/near-offer-list';
 import Map from '../map/map';
 import NotFoundPage from '../not-found-page/not-found-page';
+import {
+  getNearby,
+  getLoading,
+  getRequestStatus,
+  getRoom,
+  commentsSortSelector
+} from '../../store/offers-process/selector';
+import {MAX_RATING} from '../../const';
 
 function Room(props) {
-  const { offer, comments, nearby, getDataOffer, loading, error} = props;
+  const { offer, comments, nearby, getDataOffer, loading, error, onSetFavoriteRoom} = props;
   const { id } = useParams();
 
   useEffect(() => {
@@ -23,12 +31,17 @@ function Room(props) {
   }
 
   if (loading) {
-    return <div>Loading</div>;
+    return null;
   }
 
   if (offer === null || nearby.length === 0 || comments.length === 0) {
     return null;
   }
+
+  const onHandlerFavoriteClick = (e) => {
+    e.preventDefault();
+    onSetFavoriteRoom(id, Number(!offer.isFavorite));
+  };
 
   return (
     <div className="page">
@@ -56,7 +69,7 @@ function Room(props) {
                 <h1 className="property__name">
                   {offer.title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
+                <button className={`property__bookmark-button ${offer.isFavorite && 'property__bookmark-button--active'} button`} type="button" onClick={onHandlerFavoriteClick}>
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -65,21 +78,26 @@ function Room(props) {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: offer.rating}}></span>
+                  <span style={{width: `${(Math.round(offer.rating) * 100) / MAX_RATING}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{offer.rating}</span>
               </div>
               <ul className="property__features">
-                <li className="property__feature property__feature--entire">
-                  Apartment
-                </li>
+                {offer.type &&
+                  <li className="property__feature property__feature--entire">
+                    {offer.type}
+                  </li>}
+
+                {offer.bedrooms &&
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
-                </li>
+                  {offer.bedrooms} Bedrooms
+                </li>}
+
+                {offer.maxAdults &&
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
-                </li>
+                  Max {offer.maxAdults} adults
+                </li>}
               </ul>
               <div className="property__price">
                 <b className="property__price-value">&euro;{offer.price}</b>
@@ -137,19 +155,23 @@ Room.propTypes = {
   getDataOffer: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string,
+  onSetFavoriteRoom: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, props) => ({
-  offer: state.room,
-  comments: state.comments,
-  nearby: state.nearby,
-  loading: state.loading,
-  error: state.requestStatus,
+const mapStateToProps = (state) => ({
+  offer: getRoom(state),
+  comments: commentsSortSelector(state),
+  nearby: getNearby(state),
+  loading: getLoading(state),
+  error: getRequestStatus(state),
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, props) => ({
   getDataOffer(id) {
     dispatch(getOfferById(id));
+  },
+  onSetFavoriteRoom(id, status) {
+    dispatch(setFavoriteRoom(id, status));
   },
 });
 

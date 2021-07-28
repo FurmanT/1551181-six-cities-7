@@ -3,21 +3,22 @@ import { RatingType } from '../../const';
 import { sentReview } from '../../store/api-actions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { getRoomId } from '../../store/offers-process/selector';
 
-function AddReview({id, handlerSentReview}) {
+function AddReview({id, onSentReview}) {
   const [review, setReview] = React.useState({
     rating: 0,
     comment: '',
   });
 
-  const onChangeRating = (evt) => {
+  const handlerRatingChange = (evt) => {
     const value = evt.target.value;
     setReview({...review, rating: value});
   };
 
   const onHandlerSubmit = (e) => {
     e.preventDefault();
-    handlerSentReview(id, review);
+    onSentReview(id, review);
     setReview({
       rating: 0,
       comment: '',
@@ -31,7 +32,7 @@ function AddReview({id, handlerSentReview}) {
         {
           Object.keys(RatingType).map((key) => (
             <>
-              <input className="form__rating-input visually-hidden" name="rating" value={RatingType[key].value} id={`${RatingType[key].value}-stars`} type="radio" onChange={onChangeRating}/>
+              <input className="form__rating-input visually-hidden" name="rating" value={RatingType[key].value} id={`${RatingType[key].value}-stars`} type="radio" onChange={handlerRatingChange}/>
               <label htmlFor={`${RatingType[key].value}-stars`} className="reviews__rating-label form__rating-label" title={RatingType[key].title}>
                 <svg className="form__star-image" width="37" height="33">
                   <use xlinkHref="#icon-star"></use>
@@ -48,13 +49,14 @@ function AddReview({id, handlerSentReview}) {
           setReview({...review, comment: value});
         }}
         placeholder="Tell how was your stay, what you like and what can be improved"
+        value={review.comment}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay
           with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit" disabled="">Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={(review.comment.length === 0 && review.rating === 0)}>Submit</button>
       </div>
     </form>
   );
@@ -62,16 +64,15 @@ function AddReview({id, handlerSentReview}) {
 
 AddReview.propTypes = {
   id: PropTypes.number.isRequired,
-  handlerSentReview: PropTypes.func.isRequired,
+  onSentReview: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state, props) => ({
-  id: state.room.id,
+const mapStateToProps = (state) => ({
+  id: getRoomId(state),
 });
 
-
 const mapDispatchToProps = (dispatch) => ({
-  handlerSentReview(id, review) {
+  onSentReview(id, review) {
     dispatch(sentReview(id , review));
   },
 });

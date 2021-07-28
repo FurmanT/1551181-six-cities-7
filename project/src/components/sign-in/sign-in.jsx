@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { AuthorizationStatus } from '../../const';
 import Header from '../header/header';
+import { getAuthorizationStatus  } from '../../store/user/selector';
 
 function SignIn({onSubmit , authorizationStatus}) {
   const emailRef = useRef();
@@ -64,7 +65,7 @@ SignIn.propTypes = {
 
 
 const mapStateToProps = (state) => ({
-  authorizationStatus: state.authorizationStatus,
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

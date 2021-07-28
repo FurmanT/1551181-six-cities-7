@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { cities } from '../../const';
 import { ActionCreator } from '../../store/action';
 import Header from '../header/header';
+import { getCity, getSort } from '../../store/offers-process/selector';
 
 function Main(props) {
   const {city, onChangeCity, sort, onChangeSort} = props;
@@ -52,8 +53,8 @@ Main.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  city: state.city,
-  sort: state.sort,
+  city: getCity(state),
+  sort: getSort(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

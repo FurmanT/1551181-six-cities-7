@@ -51,9 +51,15 @@ export const sentReview = (id, review) => (dispatch, _getState, api) => {
   api.post(`comments/${id}`, review)
     .then(({data}) => {
       dispatch(ActionCreator.setComments(adaptCommentToClient(data)));
-      dispatch(ActionCreator.setStatusRequest(true));
-    })
-    .catch(() => dispatch(ActionCreator.setStatusRequest(false)));
+    });
+  //.catch(() => dispatch(ActionCreator.setStatusRequest('error')));
 };
 
+export const setFavoriteRoom = (id, status) => (dispatch, _getState, api) => {
+  api.post(`favorite/${id}/${status}`)
+    .then(({data}) => {
+      dispatch(ActionCreator.setRoom(adaptOfferToClient(data)));
+    });
+  //.catch(() => dispatch(ActionCreator.setStatusRequest('error')));
+};
 
