@@ -1,5 +1,5 @@
-export const COUNT_NEIGHBOURHOOD_IN_MAP = 3;
 export const MAX_RATING = 5;
+export const MAX_SHOW_COMMENT = 10;
 
 export const cities = [ 'Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 

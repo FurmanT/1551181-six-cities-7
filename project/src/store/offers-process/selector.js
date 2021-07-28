@@ -1,5 +1,6 @@
 import { NameSpace } from '../root-reducer';
 import { createSelector } from 'reselect';
+import dayjs from 'dayjs';
 
 export const getOffers = (state) => state[NameSpace.OFFERS_PROCESS].offers;
 export const getActiveOfferId = (state) => state[NameSpace.OFFERS_PROCESS].activeOfferId;
@@ -17,6 +18,16 @@ export const getRequestStatus = (state) => state[NameSpace.OFFERS_PROCESS].reque
 export const offersByCitySelector = createSelector(
   [getOffers, getCity],
   (offers, city) => offers.filter((offer) => offer.city.name === city),
+);
+
+export const commentsSortSelector = createSelector(
+  [getComments],
+  (comments) => comments.sort((comment1, comment2) => {
+    if (comment1.date === comment2.date) {
+      return 0;
+    }
+    return dayjs(comment2.date).diff(dayjs(comment1.date));
+  }),
 );
 
 export const offersSortSelector = createSelector(

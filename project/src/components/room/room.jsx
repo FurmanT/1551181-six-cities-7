@@ -9,7 +9,13 @@ import ReviewsList from '../reviews-list/reviews-list';
 import NearOfferList from '../near-offer-list/near-offer-list';
 import Map from '../map/map';
 import NotFoundPage from '../not-found-page/not-found-page';
-import { getComments, getNearby, getLoading, getRequestStatus, getRoom } from '../../store/offers-process/selector';
+import {
+  getNearby,
+  getLoading,
+  getRequestStatus,
+  getRoom,
+  commentsSortSelector
+} from '../../store/offers-process/selector';
 import {MAX_RATING} from '../../const';
 
 function Room(props) {
@@ -154,7 +160,7 @@ Room.propTypes = {
 
 const mapStateToProps = (state) => ({
   offer: getRoom(state),
-  comments: getComments(state),
+  comments: commentsSortSelector(state),
   nearby: getNearby(state),
   loading: getLoading(state),
   error: getRequestStatus(state),
