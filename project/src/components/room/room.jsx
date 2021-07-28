@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { offerPropTypes, reviewPropTypes } from '../../prop-types';
 import Header from '../header/header';
-import { getOfferById } from '../../store/api-actions';
+import { getOfferById, setFavoriteRoom } from '../../store/api-actions';
 import PropTypes from 'prop-types';
 import { useParams } from 'react-router-dom';
 import ReviewsList from '../reviews-list/reviews-list';
@@ -13,7 +13,7 @@ import { getComments, getNearby, getLoading, getRequestStatus, getRoom } from '.
 import {MAX_RATING} from '../../const';
 
 function Room(props) {
-  const { offer, comments, nearby, getDataOffer, loading, error} = props;
+  const { offer, comments, nearby, getDataOffer, loading, error, onSetFavoriteRoom} = props;
   const { id } = useParams();
 
   useEffect(() => {
@@ -31,6 +31,11 @@ function Room(props) {
   if (offer === null || nearby.length === 0 || comments.length === 0) {
     return null;
   }
+
+  const onHandlerFavoriteClick = (e) => {
+    e.preventDefault();
+    onSetFavoriteRoom(id, Number(!offer.isFavorite));
+  };
 
   return (
     <div className="page">
@@ -58,7 +63,7 @@ function Room(props) {
                 <h1 className="property__name">
                   {offer.title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
+                <button className={`property__bookmark-button ${offer.isFavorite && 'property__bookmark-button--active'} button`} type="button" onClick={onHandlerFavoriteClick}>
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -144,6 +149,7 @@ Room.propTypes = {
   getDataOffer: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   error: PropTypes.string,
+  onSetFavoriteRoom: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -154,9 +160,12 @@ const mapStateToProps = (state) => ({
   error: getRequestStatus(state),
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, props) => ({
   getDataOffer(id) {
     dispatch(getOfferById(id));
+  },
+  onSetFavoriteRoom(id, status) {
+    dispatch(setFavoriteRoom(id, status));
   },
 });
 
