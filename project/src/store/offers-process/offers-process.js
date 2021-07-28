@@ -1,5 +1,4 @@
-import {ActionType} from './action';
-import { AuthorizationStatus } from '../const';
+import {ActionType} from '../action';
 const initialCity = 'Paris';
 const initialSort = {name: 'popular', label: 'Popular'};
 
@@ -11,14 +10,12 @@ const initialState = {
   nearby: [],
   activeOfferId: null,
   isDataLoaded: false,
-  authorizationStatus: AuthorizationStatus.UNKNOWN,
-  user: null,
   room: null,
   loading: false,
   requestStatus: '',
 };
 
-const reducer = (state = initialState, action) => {
+const offersProcess = (state = initialState, action) => {
   switch (action.type) {
     case ActionType.CHANGE_CITY: {
       return {
@@ -47,22 +44,6 @@ const reducer = (state = initialState, action) => {
         activeOfferId: action.payload,
       };
     }
-    case ActionType.REQUIRED_AUTHORIZATION:
-      return {
-        ...state,
-        authorizationStatus: action.payload,
-      };
-    case ActionType.LOGOUT:
-      return {
-        ...state,
-        authorizationStatus: AuthorizationStatus.NO_AUTH,
-        user: null,
-      };
-    case ActionType.SET_USER:
-      return {
-        ...state,
-        user: action.payload,
-      };
     case ActionType.SET_ROOM: {
       return {
         ...state,
@@ -99,4 +80,4 @@ const reducer = (state = initialState, action) => {
 };
 
 
-export {reducer};
+export {offersProcess};

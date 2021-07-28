@@ -51,9 +51,9 @@ export const sentReview = (id, review) => (dispatch, _getState, api) => {
   api.post(`comments/${id}`, review)
     .then(({data}) => {
       dispatch(ActionCreator.setComments(adaptCommentToClient(data)));
-      dispatch(ActionCreator.setStatusRequest(true));
-    })
-    .catch(() => dispatch(ActionCreator.setStatusRequest(false)));
+      //dispatch(ActionCreator.setStatusRequest('success'));
+    });
+  //.catch(() => dispatch(ActionCreator.setStatusRequest('error')));
 };
 
 

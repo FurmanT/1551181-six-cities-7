@@ -6,7 +6,7 @@ import { offerPropTypes } from '../../prop-types';
 import PropTypes from 'prop-types';
 import { iconLeaflet, activeIconLeaflet } from './const';
 import { connect } from 'react-redux';
-import { getActiveOffer } from '../../store/offers/selector';
+import { getActiveOffer } from '../../store/offers-process/selector';
 
 function Map(props) {
   const mapRef = React.useRef(null);

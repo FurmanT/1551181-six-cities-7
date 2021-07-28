@@ -5,6 +5,7 @@ import AddReview from '../add-review/add-review';
 import ReviewCard from '../review-card/review-card';
 import { AuthorizationStatus } from '../../const';
 import { connect } from 'react-redux';
+import { getAuthorizationStatus  } from '../../store/user/selector';
 
 function ReviewsList({reviews, authorizationStatus}) {
   return (
@@ -25,8 +26,8 @@ ReviewsList.propTypes = {
   authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state, props) => ({
-  authorizationStatus: state.authorizationStatus,
+const mapStateToProps = (state) => ({
+  authorizationStatus: getAuthorizationStatus(state),
 });
 
 export default connect(mapStateToProps, null)(ReviewsList);

@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import LoadingScreen from '../loading-screen/loading-screen';
 import PrivateRoute from '../private-route/private-route';
+import { getDataLoaded } from '../../store/offers-process/selector';
 
 function App(props) {
 
@@ -48,7 +49,7 @@ App.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  isDataLoaded: state.isDataLoaded,
+  isDataLoaded: getDataLoaded(state),
 });
 
 export default connect(mapStateToProps, null)(App);

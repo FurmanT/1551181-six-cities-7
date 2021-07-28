@@ -9,6 +9,8 @@ import ReviewsList from '../reviews-list/reviews-list';
 import NearOfferList from '../near-offer-list/near-offer-list';
 import Map from '../map/map';
 import NotFoundPage from '../not-found-page/not-found-page';
+import { getComments, getNearby, getLoading, getRequestStatus, getRoom } from '../../store/offers-process/selector';
+import {MAX_RATING} from '../../const';
 
 function Room(props) {
   const { offer, comments, nearby, getDataOffer, loading, error} = props;
@@ -23,7 +25,7 @@ function Room(props) {
   }
 
   if (loading) {
-    return <div>Loading</div>;
+    return null;
   }
 
   if (offer === null || nearby.length === 0 || comments.length === 0) {
@@ -65,21 +67,26 @@ function Room(props) {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: offer.rating}}></span>
+                  <span style={{width: `${(Math.round(offer.rating) * 100) / MAX_RATING}%`}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">{offer.rating}</span>
               </div>
               <ul className="property__features">
-                <li className="property__feature property__feature--entire">
-                  Apartment
-                </li>
+                {offer.type &&
+                  <li className="property__feature property__feature--entire">
+                    {offer.type}
+                  </li>}
+
+                {offer.bedrooms &&
                 <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
-                </li>
+                  {offer.bedrooms} Bedrooms
+                </li>}
+
+                {offer.maxAdults &&
                 <li className="property__feature property__feature--adults">
-                  Max 4 adults
-                </li>
+                  Max {offer.maxAdults} adults
+                </li>}
               </ul>
               <div className="property__price">
                 <b className="property__price-value">&euro;{offer.price}</b>
@@ -139,12 +146,12 @@ Room.propTypes = {
   error: PropTypes.string,
 };
 
-const mapStateToProps = (state, props) => ({
-  offer: state.room,
-  comments: state.comments,
-  nearby: state.nearby,
-  loading: state.loading,
-  error: state.requestStatus,
+const mapStateToProps = (state) => ({
+  offer: getRoom(state),
+  comments: getComments(state),
+  nearby: getNearby(state),
+  loading: getLoading(state),
+  error: getRequestStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
