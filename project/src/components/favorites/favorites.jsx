@@ -26,7 +26,6 @@ function Favorites({offers, getOffer}) {
     });
   }
 
-
   if (!offers) {return null; }
 
   return (

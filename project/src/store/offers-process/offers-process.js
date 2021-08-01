@@ -39,12 +39,17 @@ const offersProcess = (state = initialState, action) => {
         isOffersLoaded: true,
       };
     }
+
     case ActionType.LOAD_FAVORITE_OFFERS: {
       return {
         ...state,
-        favoriteOffers: action.payload,
+        offers: state.offers.map((offer) => {
+          const find =  action.payload.find((item) => (item.id === offer.id));
+          return find ? find : offer;
+        }),
       };
     }
+
     case ActionType.SET_ACTIVE_OFFER: {
       return {
         ...state,

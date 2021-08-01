@@ -3,7 +3,7 @@ import { createSelector } from 'reselect';
 import dayjs from 'dayjs';
 
 export const getOffers = (state) => state[NameSpace.OFFERS_PROCESS].offers;
-export const getFavorite = (state) => state[NameSpace.OFFERS_PROCESS].favoriteOffers;
+export const getFavorite = (state) => state[NameSpace.OFFERS_PROCESS].offers.filter((offer) => offer.isFavorite === true );
 export const getActiveOfferId = (state) => state[NameSpace.OFFERS_PROCESS].activeOfferId;
 export const getCity = (state) => state[NameSpace.OFFERS_PROCESS].city;
 export const getSort = (state) => state[NameSpace.OFFERS_PROCESS].sort;
