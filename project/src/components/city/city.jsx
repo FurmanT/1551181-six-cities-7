@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Sort } from '../sort/sort';
 import { offerPropTypes } from '../../prop-types';
-import { offersSortSelector } from '../../store/offers-process/selector';
+import { getOffersSortSelector } from '../../store/offers-process/selector';
 import { connect } from 'react-redux';
 import { options } from '../sort/const';
 import Map from '../map/map';
@@ -40,7 +40,7 @@ City.propTypes = {
 };
 
 const mapStateToProps = (state, props) => ({
-  offers: offersSortSelector(state),
+  offers: getOffersSortSelector(state),
 });
 
 export default connect(mapStateToProps, null)(City);

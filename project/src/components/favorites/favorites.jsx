@@ -5,16 +5,16 @@ import CardInfo from '../card-info/card-info';
 import { connect } from 'react-redux';
 import Header from '../header/header';
 import { getFavorite } from '../../store/offers-process/selector';
-import { getFavoriteOffers } from '../../store/api-actions';
+import { fetchFavoriteOffers } from '../../store/api-actions';
 import { AppRoute } from '../../const';
 import { Link } from 'react-router-dom';
 
-function Favorites({offers, getOffer}) {
+function Favorites({offers, fetchOffer}) {
   const cities = [];
 
   useEffect(() => {
-    getOffer();
-  }, [getOffer]);
+    fetchOffer();
+  }, [fetchOffer]);
 
 
   if (offers) {
@@ -93,7 +93,7 @@ function Favorites({offers, getOffer}) {
 Favorites.propTypes = {
   offers: PropTypes.arrayOf(
     offerPropTypes).isRequired,
-  getOffer: PropTypes.func.isRequired,
+  fetchOffer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -101,8 +101,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getOffer() {
-    dispatch(getFavoriteOffers());
+  fetchOffer() {
+    dispatch(fetchFavoriteOffers());
   },
 
 });

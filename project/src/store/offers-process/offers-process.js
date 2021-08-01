@@ -6,7 +6,6 @@ const initialState = {
   city: initialCity,
   sort: initialSort,
   offers: [],
-  favoriteOffers: [],
   comments: [],
   nearby: [],
   activeOfferId: null,

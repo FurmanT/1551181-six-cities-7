@@ -37,13 +37,13 @@ export const logout = () => (dispatch, _getState, api) => (
 );
 
 
-export const getOfferComments = (id) => (dispatch, _getState, api) => {
+export const fetchOfferComments = (id) => (dispatch, _getState, api) => {
   api.get(`/comments/${id}`)
     .then(({data}) => dispatch(ActionCreator.setComments(adaptCommentToClient(data))))
     .catch(() => dispatch(ActionCreator.setStatusLoadComments(RESULT.ERROR)));
 };
 
-export const getOfferNearby = (id) => (dispatch, _getState, api) => {
+export const fetchOfferNearby = (id) => (dispatch, _getState, api) => {
   api.get(`/hotels/${id}/nearby`)
     .then(({data}) => dispatch(ActionCreator.setNearby(adaptOffersToClient(data))))
     .catch(() => dispatch(ActionCreator.setStatusLoadNearby(RESULT.ERROR)));
@@ -60,7 +60,7 @@ export const sentReview = (id, review) => (dispatch, _getState, api) => {
     });
 };
 
-export const setFavoriteRoom = (id, status) => (dispatch, _getState, api) => {
+export const changeFavoriteRoom = (id, status) => (dispatch, _getState, api) => {
   api.post(`favorite/${id}/${status}`)
     .then(({data}) => {
       dispatch(ActionCreator.setRoom(adaptOfferToClient(data)));
@@ -68,7 +68,7 @@ export const setFavoriteRoom = (id, status) => (dispatch, _getState, api) => {
     .catch(() => dispatch(ActionCreator.setStatusRequest(RESULT.ERROR)));
 };
 
-export const getFavoriteOffers = () => (dispatch, _getState, api) => (
+export const fetchFavoriteOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.FAVORITE)
     .then(({data}) => {
       dispatch(ActionCreator.loadFavoriteOffers(adaptOffersToClient(data)));

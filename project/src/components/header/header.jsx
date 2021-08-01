@@ -31,7 +31,7 @@ function Header({authorizationStatus, onLogOut, user}) {
                     </Link>
                   </li>)
               }
-              {(authorizationStatus === AuthorizationStatus.AUTH) &&  (
+              {(authorizationStatus === AuthorizationStatus.AUTH && user) &&  (
                 <>
                   <li className="header__nav-item user">
                     <Link className="header__nav-link header__nav-link--profile" to={AppRoute.FAVORITES}>

@@ -1,9 +1,10 @@
 import { NameSpace } from '../root-reducer';
 import { createSelector } from 'reselect';
 import dayjs from 'dayjs';
+import { cities } from '../../const';
 
 export const getOffers = (state) => state[NameSpace.OFFERS_PROCESS].offers;
-export const getFavorite = (state) => state[NameSpace.OFFERS_PROCESS].offers.filter((offer) => offer.isFavorite === true );
+export const getFavorite = (state) => state[NameSpace.OFFERS_PROCESS].offers.filter((offer) => offer.isFavorite === true);
 export const getActiveOfferId = (state) => state[NameSpace.OFFERS_PROCESS].activeOfferId;
 export const getCity = (state) => state[NameSpace.OFFERS_PROCESS].city;
 export const getSort = (state) => state[NameSpace.OFFERS_PROCESS].sort;
@@ -15,12 +16,21 @@ export const getLoading = (state) => state[NameSpace.OFFERS_PROCESS].loading;
 export const getStatusLoadComments = (state) => state[NameSpace.OFFERS_PROCESS].statusLoadComments;
 export const getStatusLoadNearby = (state) => state[NameSpace.OFFERS_PROCESS].statusLoadNearby;
 
-export const offersByCitySelector = createSelector(
+export const getFavoritesOffersByCity = (state) => {
+  const offersByCities = [];
+  //eslint-disable-next-line
+  cities.map((city) => {
+    offersByCities[city]= state[NameSpace.OFFERS_PROCESS].offers.filter((offer) => (offer.city.name === city && offer.isFavorite === true));
+  });
+  return offersByCities;
+};
+
+export const getOffersByCitySelector = createSelector(
   [getOffers, getCity],
   (offers, city) => offers.filter((offer) => offer.city.name === city),
 );
 
-export const commentsSortSelector = createSelector(
+export const getCommentsSortSelector = createSelector(
   [getComments],
   (comments) => comments.sort((comment1, comment2) => {
     if (comment1.date === comment2.date) {
@@ -30,8 +40,8 @@ export const commentsSortSelector = createSelector(
   }),
 );
 
-export const offersSortSelector = createSelector(
-  [offersByCitySelector, getSort],
+export const getOffersSortSelector = createSelector(
+  [getOffersByCitySelector, getSort],
   (offers, sort) => {
     if (sort.name === 'priceToHigh') {
       return offers.slice(0).sort((offer1, offer2) => offer1.price - offer2.price);

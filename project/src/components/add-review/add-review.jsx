@@ -24,8 +24,6 @@ function AddReview({onSentReview, statusSent}) {
   const onHandlerSubmit = (e) => {
     e.preventDefault();
     if (review.comment.length < 50 || review.comment.length > 300) {
-      //eslint-disable-next-line
-      alert('Количество символов не соответствует!');
       return;
     }
     onSentReview(id, review);
@@ -100,4 +98,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(React.memo(AddReview));
+export default connect(mapStateToProps, mapDispatchToProps)(AddReview);

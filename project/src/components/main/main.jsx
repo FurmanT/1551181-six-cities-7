@@ -7,7 +7,6 @@ import { ActionCreator } from '../../store/action';
 import Header from '../header/header';
 import { getCity, getSort } from '../../store/offers-process/selector';
 import {getStatusRequest} from '../../store/request/selector';
-import MainEmpty from '../main-empty/main-empty';
 import {Link} from 'react-router-dom';
 
 function Main(props) {
@@ -17,10 +16,6 @@ function Main(props) {
     e.preventDefault();
     onChangeCity(e.currentTarget.dataset.name);
   };
-
-  if (statusLoad === RESULT.ERROR) {
-    return <MainEmpty/>;
-  }
 
   return (
     <div className="page page--gray page--main">
@@ -42,11 +37,24 @@ function Main(props) {
             </ul>
           </section>
         </div>
-        <City
-          name={city}
-          sortBy={sort}
-          setSort={onChangeSort}
-        />
+
+        {(statusLoad === RESULT.ERROR) ? (
+          <div className="cities__places-container cities__places-container--empty container">
+            <section className="cities__no-places">
+              <div className="cities__status-wrapper tabs__content">
+                <b className="cities__status">No places to stay available</b>
+                <p className="cities__status-description">We could not find any property available at the moment in {city}</p>
+              </div>
+            </section>
+            <div className="cities__right-section"></div>
+          </div>
+        ) : (
+          <City
+            name={city}
+            sortBy={sort}
+            setSort={onChangeSort}
+          />
+        )}
       </main>
     </div>
   );

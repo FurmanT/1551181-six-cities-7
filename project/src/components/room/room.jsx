@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { offerPropTypes, reviewPropTypes } from '../../prop-types';
 import Header from '../header/header';
-import { getOfferNearby, getOfferComments, setFavoriteRoom } from '../../store/api-actions';
+import { fetchOfferNearby, fetchOfferComments, changeFavoriteRoom } from '../../store/api-actions';
 import PropTypes from 'prop-types';
 import {useHistory, useParams} from 'react-router-dom';
 import ReviewsList from '../reviews-list/reviews-list';
@@ -13,22 +13,22 @@ import {
   getNearby,
   getLoading,
   getOffersById,
-  commentsSortSelector
+  getCommentsSortSelector
 } from '../../store/offers-process/selector';
-import {AppRoute, AuthorizationStatus, MAX_RATING} from '../../const';
+import {AppRoute, AuthorizationStatus, MAX_RATING, RESULT} from '../../const';
 import {getAuthorizationStatus} from '../../store/user/selector';
 import { getStatusLoadComments, getStatusLoadNearby} from '../../store/offers-process/selector';
 
 function Room(props) {
-  const { offer, comments, nearby, getDataOffer, loading, errorLoadComments, errorLoadNearby, onSetFavoriteRoom} = props;
+  const { offer, comments, nearby, fetchDataOffer, loading, errorLoadComments, errorLoadNearby, onSetFavoriteRoom} = props;
   const { id } = useParams();
   const history = useHistory();
 
   useEffect(() => {
-    getDataOffer(id);
-  }, [getDataOffer, id]);
+    fetchDataOffer(id);
+  }, [fetchDataOffer, id]);
 
-  if (errorLoadComments === 'error' || errorLoadNearby) {
+  if (errorLoadComments === RESULT.ERROR || errorLoadNearby) {
     return <NotFoundPage/>;
   }
 
@@ -157,7 +157,7 @@ Room.propTypes = {
   offer: offerPropTypes,
   comments: PropTypes.arrayOf(reviewPropTypes),
   nearby: PropTypes.arrayOf(offerPropTypes),
-  getDataOffer: PropTypes.func.isRequired,
+  fetchDataOffer: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   errorLoadComments: PropTypes.string.isRequired,
   errorLoadNearby: PropTypes.string.isRequired,
@@ -169,7 +169,7 @@ const mapStateToProps = (state, ownProps) => {
   const id = parseInt(ownProps.match?.params.id, 10);
   return {
     offer: getOffersById(state, id),
-    comments: commentsSortSelector(state),
+    comments: getCommentsSortSelector(state),
     nearby: getNearby(state),
     loading: getLoading(state),
     errorLoadComments: getStatusLoadComments(state),
@@ -179,12 +179,12 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = (dispatch, props) => ({
-  getDataOffer(id) {
-    dispatch(getOfferNearby(id));
-    dispatch(getOfferComments(id));
+  fetchDataOffer(id) {
+    dispatch(fetchOfferNearby(id));
+    dispatch(fetchOfferComments(id));
   },
   onSetFavoriteRoom(id, status) {
-    dispatch(setFavoriteRoom(id, status));
+    dispatch(changeFavoriteRoom(id, status));
   },
 });
 

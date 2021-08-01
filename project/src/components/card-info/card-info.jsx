@@ -1,12 +1,12 @@
 import React from 'react';
 import { offerPropTypes } from '../../prop-types';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { Link } from 'react-router-dom';
 import { generatePath } from 'react-router';
 import { MAX_RATING } from '../../const';
-import {setFavoriteRoom} from '../../store/api-actions';
+import { changeFavoriteRoom } from '../../store/api-actions';
 import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import {getAuthorizationStatus} from '../../store/user/selector';
 
@@ -64,7 +64,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
   onSetFavoriteOffer(id, status) {
-    dispatch(setFavoriteRoom(id, status));
+    dispatch(changeFavoriteRoom(id, status));
   },
 });
 
