@@ -15,6 +15,7 @@ function AddReview({onSentReview, statusSent}) {
     rating: 0,
     comment: '',
   });
+  const [status, setStatus ]= React.useState('INIT');
 
   const handlerRatingChange = (evt) => {
     const value = evt.target.value;
@@ -26,6 +27,7 @@ function AddReview({onSentReview, statusSent}) {
     if (review.comment.length < 50 || review.comment.length > 300) {
       return;
     }
+    setStatus('SENT');
     onSentReview(id, review);
   };
 
@@ -35,6 +37,7 @@ function AddReview({onSentReview, statusSent}) {
         rating: 0,
         comment: '',
       });
+      setStatus('FINISH');
     }
   }, [statusSent]);
 
@@ -45,8 +48,8 @@ function AddReview({onSentReview, statusSent}) {
         {
           Object.keys(RatingType).map((key) => (
             <>
-              <input className="form__rating-input visually-hidden" name="rating" value={RatingType[key].value} id={`${RatingType[key].value}-stars`} type="radio" onChange={handlerRatingChange}/>
-              <label htmlFor={`${RatingType[key].value}-stars`} className="reviews__rating-label form__rating-label" title={RatingType[key].title}>
+              <input className="form__rating-input visually-hidden" name="rating" value={RatingType[key].value} id={`${RatingType[key].value}-stars`} type="radio" onChange={handlerRatingChange}  disabled={status === 'SENT'}/>
+              <label htmlFor={`${RatingType[key].value}-stars`} className="reviews__rating-label form__rating-label" title={RatingType[key].title} >
                 <svg className="form__star-image" width="37" height="33">
                   <use xlinkHref="#icon-star"></use>
                 </svg>
@@ -63,6 +66,7 @@ function AddReview({onSentReview, statusSent}) {
         }}
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={review.comment}
+        disabled={status === 'SENT'}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -76,7 +80,7 @@ function AddReview({onSentReview, statusSent}) {
             <Icon name="error" color="red" width="25" height="25" />
           </div>
         )}
-        <button className="reviews__submit form__submit button" type="submit" disabled={(review.comment.length === 0 && review.rating === 0)}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={(review.comment.length === 0 && review.rating === 0) || status === 'SENT'}>Submit</button>
       </div>
     </form>
   );
