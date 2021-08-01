@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useMemo} from 'react';
 import { reviewPropTypes } from '../../prop-types';
 import dayjs from 'dayjs';
+import {MAX_RATING} from '../../const';
 
 function ReviewCard({review}) {
-  const {id, user, comment, date } = review;
+  const {id, user, comment, date, rating } = review;
+
+  const starts = useMemo(() => {
+    if (rating) {
+      return `${(Math.round(rating) * 100) / MAX_RATING}%`;
+    }
+  }, [rating]);
 
   return (
     <li className="reviews__item" key={id}>
@@ -18,7 +25,7 @@ function ReviewCard({review}) {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: 80}}></span>
+            <span style={{width: starts}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

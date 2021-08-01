@@ -1,11 +1,16 @@
-import React from 'react';
-import { RatingType } from '../../const';
-import { sentReview } from '../../store/api-actions';
+import React, {useEffect} from 'react';
+import {RatingType, RESULT} from '../../const';
+import {sentReview} from '../../store/api-actions';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getRoomId } from '../../store/offers-process/selector';
+import {useParams} from 'react-router-dom';
+import {
+  getStatus
+} from '../../store/review/selector';
+import Icon from '../icon/icon';
 
-function AddReview({id, onSentReview}) {
+function AddReview({onSentReview, statusSent}) {
+  const { id } = useParams();
   const [review, setReview] = React.useState({
     rating: 0,
     comment: '',
@@ -18,12 +23,22 @@ function AddReview({id, onSentReview}) {
 
   const onHandlerSubmit = (e) => {
     e.preventDefault();
+    if (review.comment.length < 50 || review.comment.length > 300) {
+      //eslint-disable-next-line
+      alert('Количество символов не соответствует!');
+      return;
+    }
     onSentReview(id, review);
-    setReview({
-      rating: 0,
-      comment: '',
-    });
   };
+
+  useEffect(() => {
+    if (statusSent === RESULT.SUCCESS){
+      setReview({
+        rating: 0,
+        comment: '',
+      });
+    }
+  }, [statusSent]);
 
   return (
     <form className="reviews__form form" onSubmit={onHandlerSubmit}>
@@ -56,6 +71,13 @@ function AddReview({id, onSentReview}) {
           To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay
           with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
+
+        {statusSent === RESULT.ERROR && (
+          <div>
+            <p>Не удалось отправить отзыв</p>
+            <Icon name="error" color="red" width="25" height="25" />
+          </div>
+        )}
         <button className="reviews__submit form__submit button" type="submit" disabled={(review.comment.length === 0 && review.rating === 0)}>Submit</button>
       </div>
     </form>
@@ -63,12 +85,13 @@ function AddReview({id, onSentReview}) {
 }
 
 AddReview.propTypes = {
-  id: PropTypes.number.isRequired,
   onSentReview: PropTypes.func.isRequired,
+  statusSent: PropTypes.string.isRequired,
 };
 
+
 const mapStateToProps = (state) => ({
-  id: getRoomId(state),
+  statusSent: getStatus(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -77,4 +100,4 @@ const mapDispatchToProps = (dispatch) => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddReview);
+export default connect(mapStateToProps, mapDispatchToProps)(React.memo(AddReview));

@@ -8,9 +8,8 @@ import { iconLeaflet, activeIconLeaflet } from './const';
 import { connect } from 'react-redux';
 import { getActiveOffer } from '../../store/offers-process/selector';
 
-function Map(props) {
+function Map({offers, activeOffer, showActiveMarker = false, className}) {
   const mapRef = React.useRef(null);
-  const {offers, activeOffer} = props ;
   const center = offers[0].city.location;
   const map = useMap(mapRef, center);
   const group = leaflet.layerGroup();
@@ -32,6 +31,7 @@ function Map(props) {
   }, [map, offers, group]);
 
   useEffect(() => {
+    if (!showActiveMarker) { return; }
     if (activeOffer) {
       group.eachLayer((layer) => {
         const data = layer.getLatLng();
@@ -47,7 +47,7 @@ function Map(props) {
   });
 
   return (
-    <section className={`${props.className} map`} style={{height: '100%'}} ref={mapRef} />
+    <section className={`${className} map`}  ref={mapRef} />
   );
 }
 Map.propTypes = {
@@ -55,6 +55,7 @@ Map.propTypes = {
     offerPropTypes).isRequired,
   className: PropTypes.string.isRequired,
   activeOffer: offerPropTypes,
+  showActiveMarker: PropTypes.bool,
 };
 
 const mapStateToProps = (state) => ({

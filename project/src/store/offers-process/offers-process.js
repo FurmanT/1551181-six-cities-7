@@ -6,13 +6,14 @@ const initialState = {
   city: initialCity,
   sort: initialSort,
   offers: [],
+  favoriteOffers: [],
   comments: [],
   nearby: [],
   activeOfferId: null,
-  isDataLoaded: false,
-  room: null,
+  isOffersLoaded: false,
   loading: false,
-  requestStatus: '',
+  statusLoadComments: '',
+  statusLoadNearby: '',
 };
 
 const offersProcess = (state = initialState, action) => {
@@ -35,7 +36,13 @@ const offersProcess = (state = initialState, action) => {
       return {
         ...state,
         offers: action.payload,
-        isDataLoaded: true,
+        isOffersLoaded: true,
+      };
+    }
+    case ActionType.LOAD_FAVORITE_OFFERS: {
+      return {
+        ...state,
+        favoriteOffers: action.payload,
       };
     }
     case ActionType.SET_ACTIVE_OFFER: {
@@ -47,7 +54,7 @@ const offersProcess = (state = initialState, action) => {
     case ActionType.SET_ROOM: {
       return {
         ...state,
-        room: action.payload,
+        offers: state.offers.map((offer) => offer.id === action.payload.id ? action.payload : offer),
       };
     }
     case ActionType.SET_LOADING: {
@@ -68,16 +75,21 @@ const offersProcess = (state = initialState, action) => {
         nearby: action.payload,
       };
     }
-    case ActionType.SET_STATUS_REQUEST: {
+    case ActionType.SET_STATUS_LOAD_COMMENTS: {
       return {
         ...state,
-        requestStatus: action.payload,
+        statusLoadComments: action.payload,
+      };
+    }
+    case ActionType.SET_STATUS_LOAD_NEARBY: {
+      return {
+        ...state,
+        statusLoadNearby: action.payload,
       };
     }
     default:
       return state;
   }
 };
-
 
 export {offersProcess};

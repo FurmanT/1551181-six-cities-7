@@ -1,14 +1,13 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { login } from '../../store/api-actions';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { AppRoute } from '../../const';
 import { AuthorizationStatus } from '../../const';
 import Header from '../header/header';
 import { getAuthorizationStatus  } from '../../store/user/selector';
 
-function SignIn({onSubmit , authorizationStatus}) {
+function SignIn({onSubmit, authorizationStatus}) {
   const emailRef = useRef();
   const passwordRef = useRef();
   const history = useHistory();
@@ -22,9 +21,12 @@ function SignIn({onSubmit , authorizationStatus}) {
     });
   };
 
-  if (authorizationStatus === AuthorizationStatus.AUTH) {
-    history.push(AppRoute.ROOT);
-  }
+
+  useEffect(() => {
+    if (authorizationStatus === AuthorizationStatus.AUTH) {
+      history.goBack();
+    }
+  }, [authorizationStatus, history]);
 
   return (
     <div className="page page--gray page--login">

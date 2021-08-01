@@ -1,10 +1,15 @@
 import { ActionCreator } from './action';
 import { adaptOffersToClient, adaptUserToClient, adaptOfferToClient, adaptCommentToClient } from '../utils';
-import { APIRoute, AuthorizationStatus } from '../const';
+import {APIRoute, AuthorizationStatus, RESULT} from '../const';
 
 export const fetchOffersList = () => (dispatch, _getState, api) => (
   api.get(APIRoute.HOTELS)
-    .then(({data}) => dispatch(ActionCreator.loadOffers(adaptOffersToClient(data))))
+    .then(({data}) => {
+      dispatch(ActionCreator.loadOffers(adaptOffersToClient(data)));
+    })
+    .catch(() => {
+      dispatch(ActionCreator.setStatusRequest(RESULT.ERROR));
+    })
 );
 
 export const checkAuth = () => (dispatch, _getState, api) => (
@@ -32,34 +37,43 @@ export const logout = () => (dispatch, _getState, api) => (
 );
 
 
-export const getOfferById = (id) => (dispatch, _getState, api) => {
-  dispatch(ActionCreator.setLoad(true));
-  api.get(`/hotels/${id}`)
-    .then(({data}) => dispatch(ActionCreator.setRoom(adaptOfferToClient(data))))
-    .then(()=>
-      api.get(`/hotels/${id}/nearby`)
-        .then(({data}) => dispatch(ActionCreator.setNearby(adaptOffersToClient(data)))))
-    .then(() =>
-      api.get(`/comments/${id}`)
-        .then(({data}) => dispatch(ActionCreator.setComments(adaptCommentToClient(data)))))
-    .then(()=> dispatch(ActionCreator.setLoad(false)))
-    .catch(() => dispatch(ActionCreator.setStatusRequest('error')));
+export const getOfferComments = (id) => (dispatch, _getState, api) => {
+  api.get(`/comments/${id}`)
+    .then(({data}) => dispatch(ActionCreator.setComments(adaptCommentToClient(data))))
+    .catch(() => dispatch(ActionCreator.setStatusLoadComments(RESULT.ERROR)));
 };
 
+export const getOfferNearby = (id) => (dispatch, _getState, api) => {
+  api.get(`/hotels/${id}/nearby`)
+    .then(({data}) => dispatch(ActionCreator.setNearby(adaptOffersToClient(data))))
+    .catch(() => dispatch(ActionCreator.setStatusLoadNearby(RESULT.ERROR)));
+};
 
 export const sentReview = (id, review) => (dispatch, _getState, api) => {
   api.post(`comments/${id}`, review)
     .then(({data}) => {
       dispatch(ActionCreator.setComments(adaptCommentToClient(data)));
+      dispatch(ActionCreator.setStatusSentReview(RESULT.SUCCESS));
+    })
+    .catch(() => {
+      dispatch(ActionCreator.setStatusSentReview(RESULT.ERROR));
     });
-  //.catch(() => dispatch(ActionCreator.setStatusRequest('error')));
 };
 
 export const setFavoriteRoom = (id, status) => (dispatch, _getState, api) => {
   api.post(`favorite/${id}/${status}`)
     .then(({data}) => {
       dispatch(ActionCreator.setRoom(adaptOfferToClient(data)));
-    });
-  //.catch(() => dispatch(ActionCreator.setStatusRequest('error')));
+    })
+    .catch(() => dispatch(ActionCreator.setStatusRequest(RESULT.ERROR)));
 };
 
+export const getFavoriteOffers = () => (dispatch, _getState, api) => (
+  api.get(APIRoute.FAVORITE)
+    .then(({data}) => {
+      dispatch(ActionCreator.loadFavoriteOffers(adaptOffersToClient(data)));
+    })
+    .catch(() => {
+      dispatch(ActionCreator.setStatusRequest(RESULT.ERROR));
+    })
+);

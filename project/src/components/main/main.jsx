@@ -2,17 +2,25 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import City from '../city/city';
 import { connect } from 'react-redux';
-import { cities } from '../../const';
+import {cities, RESULT} from '../../const';
 import { ActionCreator } from '../../store/action';
 import Header from '../header/header';
 import { getCity, getSort } from '../../store/offers-process/selector';
+import {getStatusRequest} from '../../store/request/selector';
+import MainEmpty from '../main-empty/main-empty';
+import {Link} from 'react-router-dom';
 
 function Main(props) {
-  const {city, onChangeCity, sort, onChangeSort} = props;
+  const {city, onChangeCity, sort, onChangeSort, statusLoad} = props;
 
   const onChangeCityHandler = (e) => {
+    e.preventDefault();
     onChangeCity(e.currentTarget.dataset.name);
   };
+
+  if (statusLoad === RESULT.ERROR) {
+    return <MainEmpty/>;
+  }
 
   return (
     <div className="page page--gray page--main">
@@ -25,9 +33,9 @@ function Main(props) {
               {
                 cities.map((item) => (
                   <li className="locations__item" key={item}>
-                    <a href="/#" className= {`locations__item-link tabs__item ${item === city && 'tabs__item--active'}`} data-name={item} onClick={onChangeCityHandler} >
+                    <Link to="/#" className= {`locations__item-link tabs__item ${item === city && 'tabs__item--active'}`} data-name={item} onClick={onChangeCityHandler} >
                       <span>{item}</span>
-                    </a>
+                    </Link>
                   </li>
                 ))
               }
@@ -50,11 +58,13 @@ Main.propTypes = {
     label: PropTypes.string.isRequired}).isRequired,
   onChangeCity: PropTypes.func.isRequired,
   onChangeSort: PropTypes.func.isRequired,
+  statusLoad: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   city: getCity(state),
   sort: getSort(state),
+  statusLoad: getStatusRequest(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

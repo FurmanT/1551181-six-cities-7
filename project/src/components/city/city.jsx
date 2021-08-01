@@ -21,7 +21,7 @@ function City({name, offers, sortBy, setSort}) {
           <OffersList offers={offers} />
         </section>
         <div className="cities__right-section">
-          <Map className="cities__map" offers={offers}/>
+          <Map className="cities__map" offers={offers} showActiveMarker />
         </div>
       </div>
     </div>

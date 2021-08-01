@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { offerPropTypes, reviewPropTypes } from '../../prop-types';
 import Header from '../header/header';
-import { getOfferById, setFavoriteRoom } from '../../store/api-actions';
+import { getOfferNearby, getOfferComments, setFavoriteRoom } from '../../store/api-actions';
 import PropTypes from 'prop-types';
-import { useParams } from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 import ReviewsList from '../reviews-list/reviews-list';
 import NearOfferList from '../near-offer-list/near-offer-list';
 import Map from '../map/map';
@@ -12,21 +12,23 @@ import NotFoundPage from '../not-found-page/not-found-page';
 import {
   getNearby,
   getLoading,
-  getRequestStatus,
-  getRoom,
+  getOffersById,
   commentsSortSelector
 } from '../../store/offers-process/selector';
-import {MAX_RATING} from '../../const';
+import {AppRoute, AuthorizationStatus, MAX_RATING} from '../../const';
+import {getAuthorizationStatus} from '../../store/user/selector';
+import { getStatusLoadComments, getStatusLoadNearby} from '../../store/offers-process/selector';
 
 function Room(props) {
-  const { offer, comments, nearby, getDataOffer, loading, error, onSetFavoriteRoom} = props;
+  const { offer, comments, nearby, getDataOffer, loading, errorLoadComments, errorLoadNearby, onSetFavoriteRoom} = props;
   const { id } = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     getDataOffer(id);
   }, [getDataOffer, id]);
 
-  if (error === 'error') {
+  if (errorLoadComments === 'error' || errorLoadNearby) {
     return <NotFoundPage/>;
   }
 
@@ -34,12 +36,15 @@ function Room(props) {
     return null;
   }
 
-  if (offer === null || nearby.length === 0 || comments.length === 0) {
+  if (!offer || nearby.length === 0 || comments.length === 0) {
     return null;
   }
 
   const onHandlerFavoriteClick = (e) => {
     e.preventDefault();
+    if (props.authorizationStatus === AuthorizationStatus.NO_AUTH) {
+      history.push(AppRoute.SIGN_IN);
+    }
     onSetFavoriteRoom(id, Number(!offer.isFavorite));
   };
 
@@ -69,7 +74,7 @@ function Room(props) {
                 <h1 className="property__name">
                   {offer.title}
                 </h1>
-                <button className={`property__bookmark-button ${offer.isFavorite && 'property__bookmark-button--active'} button`} type="button" onClick={onHandlerFavoriteClick}>
+                <button className={`property__bookmark-button ${offer.isFavorite ?'property__bookmark-button--active' : ''} button`} type="button" onClick={onHandlerFavoriteClick}>
                   <svg className="property__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -154,21 +159,29 @@ Room.propTypes = {
   nearby: PropTypes.arrayOf(offerPropTypes),
   getDataOffer: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
-  error: PropTypes.string,
+  errorLoadComments: PropTypes.string.isRequired,
+  errorLoadNearby: PropTypes.string.isRequired,
   onSetFavoriteRoom: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  offer: getRoom(state),
-  comments: commentsSortSelector(state),
-  nearby: getNearby(state),
-  loading: getLoading(state),
-  error: getRequestStatus(state),
-});
+const mapStateToProps = (state, ownProps) => {
+  const id = parseInt(ownProps.match?.params.id, 10);
+  return {
+    offer: getOffersById(state, id),
+    comments: commentsSortSelector(state),
+    nearby: getNearby(state),
+    loading: getLoading(state),
+    errorLoadComments: getStatusLoadComments(state),
+    errorLoadNearby: getStatusLoadNearby(state),
+    authorizationStatus: getAuthorizationStatus(state),
+  };
+};
 
 const mapDispatchToProps = (dispatch, props) => ({
   getDataOffer(id) {
-    dispatch(getOfferById(id));
+    dispatch(getOfferNearby(id));
+    dispatch(getOfferComments(id));
   },
   onSetFavoriteRoom(id, status) {
     dispatch(setFavoriteRoom(id, status));

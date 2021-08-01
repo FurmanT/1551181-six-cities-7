@@ -1,5 +1,6 @@
 export const ActionType = {
   LOAD_OFFERS: 'offers/load',
+  LOAD_FAVORITE_OFFERS: 'offers/loadFavorite',
   CHANGE_CITY: 'city/change',
   SET_ACTIVE_OFFER: 'offers/active',
   SET_SORT: 'sort/set',
@@ -10,12 +11,21 @@ export const ActionType = {
   SET_LOADING: 'load/set',
   SET_COMMENTS: 'comments/set',
   SET_NEARBY: 'nearby/set',
-  SET_STATUS_REQUEST: 'review/status',
+  SET_STATUS_REQUEST: 'request/status',
+  SET_MESSAGE_REQUEST: 'request/message',
+  SET_REVIEW: 'review/set',
+  SET_STATUS_SENT_REVIEW: 'review/setStatus',
+  SET_STATUS_LOAD_COMMENTS: 'comments/statusLoad',
+  SET_STATUS_LOAD_NEARBY: 'nearby/statusLoad',
 };
 
 export const ActionCreator = {
   loadOffers: (offers) => ({
     type: ActionType.LOAD_OFFERS,
+    payload: offers,
+  }),
+  loadFavoriteOffers: (offers) => ({
+    type: ActionType.LOAD_FAVORITE_OFFERS,
     payload: offers,
   }),
   changeCity: (city) => ({
@@ -59,6 +69,26 @@ export const ActionCreator = {
   }),
   setStatusRequest: (status) => ({
     type: ActionType.SET_STATUS_REQUEST,
+    payload: status,
+  }),
+  setMessageRequest: (status) => ({
+    type: ActionType.SET_MESSAGE_REQUEST,
+    payload: status,
+  }),
+  setReview: (review) => ({
+    type: ActionType.SET_REVIEW,
+    payload: review,
+  }),
+  setStatusSentReview: (status) => ({
+    type: ActionType.SET_STATUS_SENT_REVIEW,
+    payload: status,
+  }),
+  setStatusLoadComments: (status) => ({
+    type: ActionType.SET_STATUS_LOAD_COMMENTS,
+    payload: status,
+  }),
+  setStatusLoadNearby: (status) => ({
+    type: ActionType.SET_STATUS_LOAD_NEARBY,
     payload: status,
   }),
 };
