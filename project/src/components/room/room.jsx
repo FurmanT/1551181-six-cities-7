@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { connect } from 'react-redux';
 import { offerPropTypes, reviewPropTypes } from '../../prop-types';
 import Header from '../header/header';
@@ -27,6 +27,15 @@ function Room(props) {
   useEffect(() => {
     fetchDataOffer(id);
   }, [fetchDataOffer, id]);
+
+  const memoizedValueOffers = useMemo(() => {
+    if (offer && nearby) {
+      //eslint-disable-next-line
+      const offerForMap = nearby.map(a => ({...a}));
+      offerForMap.push(offer);
+      return offerForMap;
+    }
+  }, [nearby, offer]);
 
   if (errorLoadComments === RESULT.ERROR || errorLoadNearby) {
     return <NotFoundPage/>;
@@ -141,7 +150,7 @@ function Room(props) {
               {comments && <ReviewsList reviews={comments}/>}
             </div>
           </div>
-          <Map className="property__map" offers={nearby} />
+          <Map className="property__map" offers={memoizedValueOffers} />
         </section>
         <div className="container">
           <section className="near-places places">

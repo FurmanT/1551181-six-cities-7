@@ -11,12 +11,13 @@ export const ActionType = {
   SET_LOADING: 'load/set',
   SET_COMMENTS: 'comments/set',
   SET_NEARBY: 'nearby/set',
-  SET_STATUS_REQUEST: 'request/status',
-  SET_MESSAGE_REQUEST: 'request/message',
   SET_REVIEW: 'review/set',
   SET_STATUS_SENT_REVIEW: 'review/setStatus',
   SET_STATUS_LOAD_COMMENTS: 'comments/statusLoad',
   SET_STATUS_LOAD_NEARBY: 'nearby/statusLoad',
+  SET_STATUS_LOAD_OFFERS: 'offers/statusLoad',
+  SET_STATUS_CHANGE_FAVORITE: 'offers/statusChangeFavorite',
+  SET_STATUS_FETCH_FAVORITE_OFFERS: 'offers/statusFetchFavoriteOffers',
 };
 
 export const ActionCreator = {
@@ -67,14 +68,6 @@ export const ActionCreator = {
     type: ActionType.SET_NEARBY,
     payload: nearby,
   }),
-  setStatusRequest: (status) => ({
-    type: ActionType.SET_STATUS_REQUEST,
-    payload: status,
-  }),
-  setMessageRequest: (status) => ({
-    type: ActionType.SET_MESSAGE_REQUEST,
-    payload: status,
-  }),
   setReview: (review) => ({
     type: ActionType.SET_REVIEW,
     payload: review,
@@ -91,4 +84,13 @@ export const ActionCreator = {
     type: ActionType.SET_STATUS_LOAD_NEARBY,
     payload: status,
   }),
+  setStatusChangeFavorite: (status) => ({
+    type: ActionType.SET_STATUS_CHANGE_FAVORITE,
+    payload: status,
+  }),
+  setStatusFetchFavoriteOffers: (status) => ({
+    type: ActionType.SET_STATUS_FETCH_FAVORITE_OFFERS,
+    payload: status,
+  }),
+
 };

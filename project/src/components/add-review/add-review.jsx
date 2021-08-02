@@ -19,7 +19,7 @@ function AddReview({onSentReview, statusSent}) {
 
   const handlerRatingChange = (evt) => {
     const value = evt.target.value;
-    setReview({...review, rating: value});
+    setReview({...review, rating: parseInt(value, 10)});
   };
 
   const onHandlerSubmit = (e) => {
@@ -31,13 +31,17 @@ function AddReview({onSentReview, statusSent}) {
     onSentReview(id, review);
   };
 
+
   useEffect(() => {
     if (statusSent === RESULT.SUCCESS){
       setReview({
         rating: 0,
         comment: '',
       });
-      setStatus('FINISH');
+      setStatus('INIT');
+    }
+    if (statusSent === RESULT.ERROR) {
+      setStatus('ERROR');
     }
   }, [statusSent]);
 
@@ -48,7 +52,7 @@ function AddReview({onSentReview, statusSent}) {
         {
           Object.keys(RatingType).map((key) => (
             <>
-              <input className="form__rating-input visually-hidden" name="rating" value={RatingType[key].value} id={`${RatingType[key].value}-stars`} type="radio" onChange={handlerRatingChange}  disabled={status === 'SENT'}/>
+              <input className="form__rating-input visually-hidden" name="rating" value={RatingType[key].value} id={`${RatingType[key].value}-stars`} type="radio" onChange={handlerRatingChange} checked={RatingType[key].value === review.rating} disabled={status === 'SENT'}/>
               <label htmlFor={`${RatingType[key].value}-stars`} className="reviews__rating-label form__rating-label" title={RatingType[key].title} >
                 <svg className="form__star-image" width="37" height="33">
                   <use xlinkHref="#icon-star"></use>
@@ -80,7 +84,7 @@ function AddReview({onSentReview, statusSent}) {
             <Icon name="error" color="red" width="25" height="25" />
           </div>
         )}
-        <button className="reviews__submit form__submit button" type="submit" disabled={(review.comment.length === 0 && review.rating === 0) || status === 'SENT'}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={(review.comment.length === 0 || review.rating === 0) || status === 'SENT'}>Submit</button>
       </div>
     </form>
   );

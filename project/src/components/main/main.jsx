@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import City from '../city/city';
 import { connect } from 'react-redux';
-import {cities, RESULT} from '../../const';
+import { cities, RESULT } from '../../const';
 import { ActionCreator } from '../../store/action';
 import Header from '../header/header';
 import { getCity, getSort } from '../../store/offers-process/selector';
-import {getStatusRequest} from '../../store/request/selector';
+import { getStatusLoadOffers } from '../../store/offers-process/selector';
 import {Link} from 'react-router-dom';
 
 function Main(props) {
@@ -72,7 +72,7 @@ Main.propTypes = {
 const mapStateToProps = (state) => ({
   city: getCity(state),
   sort: getSort(state),
-  statusLoad: getStatusRequest(state),
+  statusLoad: getStatusLoadOffers(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

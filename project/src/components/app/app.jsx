@@ -1,7 +1,7 @@
 import React from 'react';
 import Main from '../main/main';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import {AppRoute, RESULT} from '../../const';
+import { AppRoute, RESULT } from '../../const';
 import Room from '../room/room';
 import Favorites from '../favorites/favorites';
 import SignIn from '../sign-in/sign-in';
@@ -10,10 +10,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import LoadingScreen from '../loading-screen/loading-screen';
 import PrivateRoute from '../private-route/private-route';
-import {getDataLoaded } from '../../store/offers-process/selector';
-import {getStatusRequest} from '../../store/request/selector';
+import { getDataLoaded } from '../../store/offers-process/selector';
+import { getStatusLoadOffers } from '../../store/offers-process/selector';
 
 function App(props) {
+
   if(!props.isOffersLoaded && props.statusLoad !== RESULT.ERROR) {
     return (
       <LoadingScreen />
@@ -50,7 +51,7 @@ App.propTypes = {
 
 const mapStateToProps = (state) => ({
   isOffersLoaded: getDataLoaded(state),
-  statusLoad: getStatusRequest(state),
+  statusLoad: getStatusLoadOffers(state),
 });
 
 export default connect(mapStateToProps, null)(App);

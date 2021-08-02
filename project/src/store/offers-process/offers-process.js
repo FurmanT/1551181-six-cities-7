@@ -11,8 +11,11 @@ const initialState = {
   activeOfferId: null,
   isOffersLoaded: false,
   loading: false,
+  statusLoadOffers: '',
   statusLoadComments: '',
   statusLoadNearby: '',
+  statusChangeFavorite: '',
+  statusFetchFavorite: '',
 };
 
 const offersProcess = (state = initialState, action) => {
@@ -38,7 +41,6 @@ const offersProcess = (state = initialState, action) => {
         isOffersLoaded: true,
       };
     }
-
     case ActionType.LOAD_FAVORITE_OFFERS: {
       return {
         ...state,
@@ -48,7 +50,6 @@ const offersProcess = (state = initialState, action) => {
         }),
       };
     }
-
     case ActionType.SET_ACTIVE_OFFER: {
       return {
         ...state,
@@ -79,6 +80,12 @@ const offersProcess = (state = initialState, action) => {
         nearby: action.payload,
       };
     }
+    case ActionType.SET_STATUS_LOAD_OFFERS: {
+      return {
+        ...state,
+        statusLoadOffers: action.payload,
+      };
+    }
     case ActionType.SET_STATUS_LOAD_COMMENTS: {
       return {
         ...state,
@@ -91,6 +98,20 @@ const offersProcess = (state = initialState, action) => {
         statusLoadNearby: action.payload,
       };
     }
+    case ActionType.SET_STATUS_CHANGE_FAVORITE: {
+      return {
+        ...state,
+        statusChangeFavorite: action.payload,
+      };
+    }
+    case ActionType.SET_STATUS_FETCH_FAVORITE_OFFERS: {
+      return {
+        ...state,
+        statusFetchFavorite: action.payload,
+      };
+    }
+
+
     default:
       return state;
   }

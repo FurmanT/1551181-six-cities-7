@@ -8,7 +8,7 @@ export const fetchOffersList = () => (dispatch, _getState, api) => (
       dispatch(ActionCreator.loadOffers(adaptOffersToClient(data)));
     })
     .catch(() => {
-      dispatch(ActionCreator.setStatusRequest(RESULT.ERROR));
+      dispatch(ActionCreator.setStatusLoadOffers(RESULT.ERROR));
     })
 );
 
@@ -65,7 +65,7 @@ export const changeFavoriteRoom = (id, status) => (dispatch, _getState, api) => 
     .then(({data}) => {
       dispatch(ActionCreator.setRoom(adaptOfferToClient(data)));
     })
-    .catch(() => dispatch(ActionCreator.setStatusRequest(RESULT.ERROR)));
+    .catch(() => dispatch(ActionCreator.setStatusChangeFavorite(RESULT.ERROR)));
 };
 
 export const fetchFavoriteOffers = () => (dispatch, _getState, api) => (
@@ -74,6 +74,6 @@ export const fetchFavoriteOffers = () => (dispatch, _getState, api) => (
       dispatch(ActionCreator.loadFavoriteOffers(adaptOffersToClient(data)));
     })
     .catch(() => {
-      dispatch(ActionCreator.setStatusRequest(RESULT.ERROR));
+      dispatch(ActionCreator.setStatusFetchFavoriteOffers(RESULT.ERROR));
     })
 );

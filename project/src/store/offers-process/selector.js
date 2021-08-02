@@ -15,15 +15,7 @@ export const getNearby = (state) => state[NameSpace.OFFERS_PROCESS].nearby;
 export const getLoading = (state) => state[NameSpace.OFFERS_PROCESS].loading;
 export const getStatusLoadComments = (state) => state[NameSpace.OFFERS_PROCESS].statusLoadComments;
 export const getStatusLoadNearby = (state) => state[NameSpace.OFFERS_PROCESS].statusLoadNearby;
-
-export const getFavoritesOffersByCity = (state) => {
-  const offersByCities = [];
-  //eslint-disable-next-line
-  cities.map((city) => {
-    offersByCities[city]= state[NameSpace.OFFERS_PROCESS].offers.filter((offer) => (offer.city.name === city && offer.isFavorite === true));
-  });
-  return offersByCities;
-};
+export const getStatusLoadOffers = (state) => state[NameSpace.OFFERS_PROCESS].statusLoadOffers;
 
 export const getOffersByCitySelector = createSelector(
   [getOffers, getCity],
