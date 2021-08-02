@@ -18,6 +18,7 @@ export const ActionType = {
   SET_STATUS_LOAD_OFFERS: 'offers/statusLoad',
   SET_STATUS_CHANGE_FAVORITE: 'offers/statusChangeFavorite',
   SET_STATUS_FETCH_FAVORITE_OFFERS: 'offers/statusFetchFavoriteOffers',
+  SET_STATUS_REVIEW_FORM: 'review/setStatusForm',
 };
 
 export const ActionCreator = {
@@ -92,5 +93,8 @@ export const ActionCreator = {
     type: ActionType.SET_STATUS_FETCH_FAVORITE_OFFERS,
     payload: status,
   }),
-
+  setStatusFormReview: (status) => ({
+    type: ActionType.SET_STATUS_REVIEW_FORM,
+    payload: status,
+  }),
 };

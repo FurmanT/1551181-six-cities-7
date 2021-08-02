@@ -30,8 +30,7 @@ function Room(props) {
 
   const memoizedValueOffers = useMemo(() => {
     if (offer && nearby) {
-      //eslint-disable-next-line
-      const offerForMap = nearby.map(a => ({...a}));
+      const offerForMap = nearby.map((a) => ({...a}));
       offerForMap.push(offer);
       return offerForMap;
     }

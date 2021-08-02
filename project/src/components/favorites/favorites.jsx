@@ -18,8 +18,7 @@ function Favorites({offers, fetchOffer}) {
 
 
   if (offers) {
-  //eslint-disable-next-line
-    offers.map((value) => {
+    offers.forEach((value) => {
       if (cities.indexOf(value.city.name) === -1) {
         cities.push(value.city.name);
       }

@@ -50,12 +50,15 @@ export const fetchOfferNearby = (id) => (dispatch, _getState, api) => {
 };
 
 export const sentReview = (id, review) => (dispatch, _getState, api) => {
+  dispatch(ActionCreator.setStatusFormReview('SENT'));
   api.post(`comments/${id}`, review)
     .then(({data}) => {
       dispatch(ActionCreator.setComments(adaptCommentToClient(data)));
-      dispatch(ActionCreator.setStatusSentReview(RESULT.SUCCESS));
+      dispatch(ActionCreator.setStatusFormReview('INIT'));
+
     })
     .catch(() => {
+      dispatch(ActionCreator.setStatusFormReview('ERROR'));
       dispatch(ActionCreator.setStatusSentReview(RESULT.ERROR));
     });
 };

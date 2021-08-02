@@ -2,6 +2,7 @@ import {ActionType} from '../action';
 
 const initialState = {
   statusSent: '',
+  statusForm: 'INIT',
 };
 
 const review = (state = initialState, action) => {
@@ -10,6 +11,12 @@ const review = (state = initialState, action) => {
       return {
         ...state,
         statusSent: action.payload,
+      };
+    }
+    case ActionType.SET_STATUS_REVIEW_FORM: {
+      return {
+        ...state,
+        statusForm: action.payload,
       };
     }
     default:

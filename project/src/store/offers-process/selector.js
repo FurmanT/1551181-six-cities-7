@@ -1,7 +1,6 @@
 import { NameSpace } from '../root-reducer';
 import { createSelector } from 'reselect';
 import dayjs from 'dayjs';
-import { cities } from '../../const';
 
 export const getOffers = (state) => state[NameSpace.OFFERS_PROCESS].offers;
 export const getFavorite = (state) => state[NameSpace.OFFERS_PROCESS].offers.filter((offer) => offer.isFavorite === true);

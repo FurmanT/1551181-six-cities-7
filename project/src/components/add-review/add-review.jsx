@@ -5,17 +5,16 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {useParams} from 'react-router-dom';
 import {
-  getStatus
+  getStatus, getStatusForm
 } from '../../store/review/selector';
 import Icon from '../icon/icon';
 
-function AddReview({onSentReview, statusSent}) {
+function AddReview({onSentReview, statusForm, statusSent}) {
   const { id } = useParams();
   const [review, setReview] = React.useState({
     rating: 0,
     comment: '',
   });
-  const [status, setStatus ]= React.useState('INIT');
 
   const handlerRatingChange = (evt) => {
     const value = evt.target.value;
@@ -27,23 +26,17 @@ function AddReview({onSentReview, statusSent}) {
     if (review.comment.length < 50 || review.comment.length > 300) {
       return;
     }
-    setStatus('SENT');
     onSentReview(id, review);
   };
 
-
   useEffect(() => {
-    if (statusSent === RESULT.SUCCESS){
+    if (statusForm === 'INIT'){
       setReview({
         rating: 0,
         comment: '',
       });
-      setStatus('INIT');
     }
-    if (statusSent === RESULT.ERROR) {
-      setStatus('ERROR');
-    }
-  }, [statusSent]);
+  }, [statusForm]);
 
   return (
     <form className="reviews__form form" onSubmit={onHandlerSubmit}>
@@ -52,9 +45,9 @@ function AddReview({onSentReview, statusSent}) {
         {
           Object.keys(RatingType).map((key) => (
             <>
-              <input className="form__rating-input visually-hidden" name="rating" value={RatingType[key].value} id={`${RatingType[key].value}-stars`} type="radio" onChange={handlerRatingChange} checked={RatingType[key].value === review.rating} disabled={status === 'SENT'}/>
-              <label htmlFor={`${RatingType[key].value}-stars`} className="reviews__rating-label form__rating-label" title={RatingType[key].title} >
-                <svg className="form__star-image" width="37" height="33">
+              <input className="form__rating-input visually-hidden" name="rating" value={RatingType[key].value} id={`${RatingType[key].value}-stars`} type="radio" onChange={handlerRatingChange} checked={RatingType[key].value === review.rating}  disabled={statusForm === 'SENT'} />
+              <label htmlFor={`${RatingType[key].value}-stars`} className="reviews__rating-label form__rating-label" title={RatingType[key].title} disabled={statusForm === 'SENT'} >
+                <svg className="form__star-image" width="37" height="33"  disabled={statusForm === 'SENT'}>
                   <use xlinkHref="#icon-star"></use>
                 </svg>
               </label>
@@ -70,7 +63,7 @@ function AddReview({onSentReview, statusSent}) {
         }}
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={review.comment}
-        disabled={status === 'SENT'}
+        disabled={statusForm === 'SENT'}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -84,7 +77,7 @@ function AddReview({onSentReview, statusSent}) {
             <Icon name="error" color="red" width="25" height="25" />
           </div>
         )}
-        <button className="reviews__submit form__submit button" type="submit" disabled={(review.comment.length === 0 || review.rating === 0) || status === 'SENT'}>Submit</button>
+        <button className="reviews__submit form__submit button" type="submit" disabled={(review.comment.length === 0 || review.rating === 0) || statusForm === 'SENT'}>Submit</button>
       </div>
     </form>
   );
@@ -93,11 +86,13 @@ function AddReview({onSentReview, statusSent}) {
 AddReview.propTypes = {
   onSentReview: PropTypes.func.isRequired,
   statusSent: PropTypes.string.isRequired,
+  statusForm: PropTypes.string.isRequired,
 };
 
 
 const mapStateToProps = (state) => ({
   statusSent: getStatus(state),
+  statusForm: getStatusForm(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({
