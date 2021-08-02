@@ -97,4 +97,8 @@ export const ActionCreator = {
     type: ActionType.SET_STATUS_REVIEW_FORM,
     payload: status,
   }),
+  setStatusLoadOffers: (status) => ({
+    type: ActionType.SET_STATUS_LOAD_OFFERS,
+    payload: status,
+  }),
 };

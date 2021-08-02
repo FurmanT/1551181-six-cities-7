@@ -2,19 +2,14 @@ import React, { useRef  } from 'react';
 import PropTypes from 'prop-types';
 import { login } from '../../store/api-actions';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../const';
+import { Redirect } from 'react-router-dom';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import Header from '../header/header';
 import { getAuthorizationStatus  } from '../../store/user/selector';
 
 function SignIn({onSubmit, authorizationStatus}) {
   const emailRef = useRef();
   const passwordRef = useRef();
-  const history = useHistory();
-
-  if (authorizationStatus === AuthorizationStatus.AUTH) {
-    history.push(AppRoute.ROOT);
-  }
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -24,6 +19,10 @@ function SignIn({onSubmit, authorizationStatus}) {
       password: passwordRef.current.value,
     });
   };
+
+  if (authorizationStatus === AuthorizationStatus.AUTH) {
+    return <Redirect to={AppRoute.ROOT} />;
+  }
 
   return (
     <div className="page page--gray page--login">

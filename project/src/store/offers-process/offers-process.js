@@ -38,7 +38,8 @@ const offersProcess = (state = initialState, action) => {
       return {
         ...state,
         offers: action.payload,
-        isOffersLoaded: true,
+        isOffersLoaded: action.payload.length > 0 ,
+        statusLoadOffers: (action.payload.length === 0) ? 'error': '',
       };
     }
     case ActionType.LOAD_FAVORITE_OFFERS: {

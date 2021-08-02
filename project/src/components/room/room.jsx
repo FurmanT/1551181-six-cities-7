@@ -18,11 +18,17 @@ import {
 import {AppRoute, AuthorizationStatus, MAX_RATING, RESULT} from '../../const';
 import {getAuthorizationStatus} from '../../store/user/selector';
 import { getStatusLoadComments, getStatusLoadNearby} from '../../store/offers-process/selector';
+import {ActionCreator} from '../../store/action';
 
 function Room(props) {
-  const { offer, comments, nearby, fetchDataOffer, loading, errorLoadComments, errorLoadNearby, onSetFavoriteRoom} = props;
+  const { offer, comments, nearby, fetchDataOffer, loading, errorLoadComments, errorLoadNearby, onSetFavoriteRoom, onSetActiveOffer} = props;
   const { id } = useParams();
   const history = useHistory();
+
+  useEffect(() => {
+    onSetActiveOffer(parseInt(id, 10));
+  }, [id,onSetActiveOffer]);
+
 
   useEffect(() => {
     fetchDataOffer(id);
@@ -44,7 +50,7 @@ function Room(props) {
     return null;
   }
 
-  if (!offer || nearby.length === 0 || comments.length === 0) {
+  if (!offer || nearby.length === 0) {
     return null;
   }
 
@@ -149,7 +155,7 @@ function Room(props) {
               {comments && <ReviewsList reviews={comments}/>}
             </div>
           </div>
-          <Map className="property__map" offers={memoizedValueOffers} />
+          <Map className="property__map" offers={memoizedValueOffers}  showActiveMarker/>
         </section>
         <div className="container">
           <section className="near-places places">
@@ -171,6 +177,7 @@ Room.propTypes = {
   errorLoadNearby: PropTypes.string.isRequired,
   onSetFavoriteRoom: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
+  onSetActiveOffer: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -193,6 +200,9 @@ const mapDispatchToProps = (dispatch, props) => ({
   },
   onSetFavoriteRoom(id, status) {
     dispatch(changeFavoriteRoom(id, status));
+  },
+  onSetActiveOffer(id) {
+    dispatch(ActionCreator.setActiveOffer(id));
   },
 });
 
