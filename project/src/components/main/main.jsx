@@ -12,9 +12,9 @@ import {Link} from 'react-router-dom';
 function Main(props) {
   const {city, onChangeCity, sort, onChangeSort, statusLoad} = props;
 
-  const onChangeCityHandler = (e) => {
-    e.preventDefault();
-    onChangeCity(e.currentTarget.dataset.name);
+  const onChangeCityHandler = (event) => {
+    event.preventDefault();
+    onChangeCity(event.currentTarget.dataset.name);
   };
 
   return (

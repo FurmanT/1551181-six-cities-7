@@ -61,7 +61,7 @@ function Favorites({offers, fetchOffer}) {
                             {filterOffers.map((offer) => (
                               <article className="favorites__card place-card" key={offer.id}>
                                 <div className="favorites__image-wrapper place-card__image-wrapper">
-                                  <Link to="/" onClick={(e) => e.preventDefault()}>
+                                  <Link to="/" onClick={(event) => event.preventDefault()}>
                                     <img className="place-card__image" src={offer.previewImage} width="150" height="110" alt="Place"/>
                                   </Link>
                                 </div>

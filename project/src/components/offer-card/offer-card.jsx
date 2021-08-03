@@ -16,7 +16,7 @@ function OfferCard({offer, onMouseEnter, onMouseLeave}) {
         </div>
       }
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to= "/" onClick={(e) => e.preventDefault()}>
+        <Link to= "/" onClick={(event) => event.preventDefault()}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt="Place " />
         </Link>
       </div>
