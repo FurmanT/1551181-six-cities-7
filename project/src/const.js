@@ -1,7 +1,7 @@
 export const MAX_RATING = 5;
 export const MAX_SHOW_COMMENT = 10;
 
-export const cities = [ 'Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
+export const CITIES = [ 'Paris', 'Cologne', 'Brussels', 'Amsterdam', 'Hamburg', 'Dusseldorf'];
 
 export const AppRoute = {
   SIGN_IN: '/login',

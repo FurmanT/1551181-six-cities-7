@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import City from '../city/city';
 import { connect } from 'react-redux';
-import { cities, RESULT } from '../../const';
+import { CITIES, RESULT } from '../../const';
 import { ActionCreator } from '../../store/action';
 import Header from '../header/header';
 import { getCity, getSort } from '../../store/offers-process/selector';
@@ -26,7 +26,7 @@ function Main(props) {
           <section className="locations container">
             <ul className="locations__list tabs__list">
               {
-                cities.map((item) => (
+                CITIES.map((item) => (
                   <li className="locations__item" key={item}>
                     <Link to="/#" className= {`locations__item-link tabs__item ${item === city && 'tabs__item--active'}`} data-name={item} onClick={onChangeCityHandler} >
                       <span>{item}</span>

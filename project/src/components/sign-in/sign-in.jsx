@@ -13,7 +13,9 @@ function SignIn({onSubmit, authorizationStatus}) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
+    if (parseInt(emailRef.current.value.length, 10) === 0 || parseInt(passwordRef.current.value.trim().length, 10) === 0) {
+      return;
+    }
     onSubmit({
       email: emailRef.current.value,
       password: passwordRef.current.value,

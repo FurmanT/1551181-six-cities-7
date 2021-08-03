@@ -15,8 +15,8 @@ function CardInfo(props) {
   const stars = (Math.round(rating) * 100) / MAX_RATING;
   const history = useHistory();
 
-  const onHandlerFavoriteClick = (e) => {
-    e.preventDefault();
+  const onHandlerFavoriteClick = (event) => {
+    event.preventDefault();
     if (props.authorizationStatus === AuthorizationStatus.NO_AUTH) {
       history.push(AppRoute.SIGN_IN);
     }

@@ -61,6 +61,7 @@ const offersProcess = (state = initialState, action) => {
       return {
         ...state,
         offers: state.offers.map((offer) => offer.id === action.payload.id ? action.payload : offer),
+        nearby: state.nearby.map((offer) => offer.id === action.payload.id ? action.payload : offer),
       };
     }
     case ActionType.SET_LOADING: {

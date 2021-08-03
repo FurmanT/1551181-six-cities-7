@@ -21,8 +21,8 @@ function AddReview({onSentReview, statusForm, statusSent}) {
     setReview({...review, rating: parseInt(value, 10)});
   };
 
-  const onHandlerSubmit = (e) => {
-    e.preventDefault();
+  const onHandlerSubmit = (event) => {
+    event.preventDefault();
     if (review.comment.length < 50 || review.comment.length > 300) {
       return;
     }
@@ -44,14 +44,14 @@ function AddReview({onSentReview, statusForm, statusSent}) {
       <div className="reviews__rating-form form__rating">
         {
           Object.keys(RatingType).map((key) => (
-            <>
+            <React.Fragment key={key}>
               <input className="form__rating-input visually-hidden" name="rating" value={RatingType[key].value} id={`${RatingType[key].value}-stars`} type="radio" onChange={handlerRatingChange} checked={RatingType[key].value === review.rating}  disabled={statusForm === 'SENT'} />
               <label htmlFor={`${RatingType[key].value}-stars`} className="reviews__rating-label form__rating-label" title={RatingType[key].title} disabled={statusForm === 'SENT'} >
                 <svg className="form__star-image" width="37" height="33"  disabled={statusForm === 'SENT'}>
                   <use xlinkHref="#icon-star"></use>
                 </svg>
               </label>
-            </>
+            </React.Fragment>
           ))
         }
       </div>

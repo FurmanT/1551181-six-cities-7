@@ -7,8 +7,8 @@ import { connect } from 'react-redux';
 import { getAuthorizationStatus, getUser } from '../../store/user/selector';
 
 function Header({authorizationStatus, onLogOut, user}) {
-  const onLogOutHandler = (e) =>{
-    e.preventDefault();
+  const onLogOutHandler = (event) =>{
+    event.preventDefault();
     onLogOut();
   };
 

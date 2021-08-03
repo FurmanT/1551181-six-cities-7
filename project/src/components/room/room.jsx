@@ -21,7 +21,7 @@ import { getStatusLoadComments, getStatusLoadNearby} from '../../store/offers-pr
 import {ActionCreator} from '../../store/action';
 
 function Room(props) {
-  const { offer, comments, nearby, fetchDataOffer, loading, errorLoadComments, errorLoadNearby, onSetFavoriteRoom, onSetActiveOffer} = props;
+  const { offer, comments, nearbyOffers, fetchDataOffer, loading, errorLoadComments, errorLoadNearby, onSetFavoriteRoom, onSetActiveOffer} = props;
   const { id } = useParams();
   const history = useHistory();
 
@@ -35,12 +35,12 @@ function Room(props) {
   }, [fetchDataOffer, id]);
 
   const memoizedValueOffers = useMemo(() => {
-    if (offer && nearby) {
-      const offerForMap = nearby.map((a) => ({...a}));
+    if (offer && nearbyOffers) {
+      const offerForMap = nearbyOffers.map((a) => ({...a}));
       offerForMap.push(offer);
       return offerForMap;
     }
-  }, [nearby, offer]);
+  }, [nearbyOffers, offer]);
 
   if (errorLoadComments === RESULT.ERROR || errorLoadNearby) {
     return <NotFoundPage/>;
@@ -50,12 +50,12 @@ function Room(props) {
     return null;
   }
 
-  if (!offer || nearby.length === 0) {
+  if (!offer || nearbyOffers.length === 0) {
     return null;
   }
 
-  const onHandlerFavoriteClick = (e) => {
-    e.preventDefault();
+  const onHandlerFavoriteClick = (event) => {
+    event.preventDefault();
     if (props.authorizationStatus === AuthorizationStatus.NO_AUTH) {
       history.push(AppRoute.SIGN_IN);
     }
@@ -69,7 +69,7 @@ function Room(props) {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {offer.images.map((image) => (
+              {offer.images.slice(0, 6).map((image) => (
                 <div className="property__image-wrapper" key={image}>
                   <img className="property__image" src={image} alt="studio"/>
                 </div>
@@ -160,7 +160,7 @@ function Room(props) {
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <NearOfferList offers = {nearby} />
+            <NearOfferList offers = {nearbyOffers} />
           </section>
         </div>
       </main>
@@ -170,7 +170,7 @@ function Room(props) {
 Room.propTypes = {
   offer: offerPropTypes,
   comments: PropTypes.arrayOf(reviewPropTypes),
-  nearby: PropTypes.arrayOf(offerPropTypes),
+  nearbyOffers: PropTypes.arrayOf(offerPropTypes),
   fetchDataOffer: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   errorLoadComments: PropTypes.string.isRequired,
@@ -185,7 +185,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     offer: getOffersById(state, id),
     comments: getCommentsSortSelector(state),
-    nearby: getNearby(state),
+    nearbyOffers: getNearby(state),
     loading: getLoading(state),
     errorLoadComments: getStatusLoadComments(state),
     errorLoadNearby: getStatusLoadNearby(state),

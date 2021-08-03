@@ -55,7 +55,7 @@ export const sentReview = (id, review) => (dispatch, _getState, api) => {
     .then(({data}) => {
       dispatch(ActionCreator.setComments(adaptCommentToClient(data)));
       dispatch(ActionCreator.setStatusFormReview('INIT'));
-
+      dispatch(ActionCreator.setStatusSentReview(''));
     })
     .catch(() => {
       dispatch(ActionCreator.setStatusFormReview('ERROR'));
