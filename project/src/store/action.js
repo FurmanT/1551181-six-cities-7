@@ -11,7 +11,6 @@ export const ActionType = {
   SET_LOADING: 'load/set',
   SET_COMMENTS: 'comments/set',
   SET_NEARBY: 'nearby/set',
-  SET_REVIEW: 'review/set',
   SET_STATUS_SENT_REVIEW: 'review/setStatus',
   SET_STATUS_LOAD_COMMENTS: 'comments/statusLoad',
   SET_STATUS_LOAD_NEARBY: 'nearby/statusLoad',
@@ -68,10 +67,6 @@ export const ActionCreator = {
   setNearby: (nearby) => ({
     type: ActionType.SET_NEARBY,
     payload: nearby,
-  }),
-  setReview: (review) => ({
-    type: ActionType.SET_REVIEW,
-    payload: review,
   }),
   setStatusSentReview: (status) => ({
     type: ActionType.SET_STATUS_SENT_REVIEW,
